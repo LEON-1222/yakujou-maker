@@ -1,0 +1,574 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>薬情メーカー 統合検証版 5.0 | デモ</title><style>
+:root{--ink:#172233;--line:#dbb0ad;--rose:#a54a4b;--panel:#f6f8fb}*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:var(--ink);background:#edf1f5;margin:0}header{padding:14px 20px;background:#17283d;color:white;display:flex;align-items:center;justify-content:space-between;gap:10px}header strong{font-size:19px}header small{display:block;color:#bbd0e1;font-size:11px}button{background:#17669c;border:0;color:white;padding:10px 15px;border-radius:9px;font-weight:700;cursor:pointer;font-size:14px}button.secondary{background:#e9eff4;color:#20344c}button.danger{background:#fff1ee;color:#aa3e40}button:disabled{opacity:.5}.layout{display:grid;grid-template-columns:330px minmax(0,1fr);gap:20px;max-width:1480px;margin:18px auto;padding:0 16px}.controls{background:white;border-radius:14px;padding:17px;align-self:start;box-shadow:0 2px 12px #18253e13}.controls h2{font-size:18px;margin:0 0 9px}.hint{font-size:12px;color:#617084;line-height:1.6}.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd3df;border-radius:7px;padding:9px;background:#fff;color:#152333;font:inherit;font-size:14px}.field textarea{min-height:65px;resize:vertical}.fieldrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.timeinputs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.timeinputs input{text-align:center;padding:8px 2px}.timeinputs label{text-align:center}.buttonrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.drugpicker{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.drugpicker button{background:#eaf0f5;color:#25394c;padding:7px 10px}.drugpicker button.active{background:#17669c;color:white}.preview{min-width:0}.previewbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px}.previewbar span{font-size:13px;color:#576a7c}.sheet{background:white;width:100%;max-width:900px;margin:auto;padding:30px 24px 22px;box-shadow:0 4px 20px #14253b20;min-height:1040px}.sheetheader{display:flex;justify-content:space-between;gap:10px;align-items:start;margin-bottom:14px}.sheetheader h1{font-size:29px;margin:0}.sheetheader small{color:#526174;font-size:12px}.medtable{width:100%;border-collapse:collapse;table-layout:fixed;border:1px solid #c97976}.medtable th{background:#faeded;text-align:center;padding:10px 5px;border:1px solid #cf9b98;font-size:13px}.medtable td{border:1px solid #d7a3a0;vertical-align:top;padding:11px 8px;font-size:12px;line-height:1.6;overflow-wrap:anywhere}.medtable th:nth-child(1){width:25%}.medtable th:nth-child(2){width:24%}.medtable th:nth-child(3){width:33%}.medtable th:nth-child(4){width:18%}.medname{font-weight:800;font-size:15px;margin:0 0 8px}.pillmock{height:65px;background:linear-gradient(135deg,#eef1f3,#fafafa);border-radius:6px;display:flex;justify-content:center;align-items:center;margin-bottom:6px}.pill{width:42px;height:42px;border-radius:50%;background:linear-gradient(145deg,#fff,#ccd4d9);box-shadow:3px 4px 8px #0002;display:grid;place-items:center;color:#8b95a0;font-size:11px}.pack{display:inline-block;background:#bc6868;color:white;border-radius:6px;font-size:10px;padding:2px 5px;margin-bottom:4px}.mocknotice{font-size:9px;color:#697788}.times{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.timehead{font-weight:750;text-align:center;background:#eaf0f3;border-radius:4px;padding:2px}.dose{text-align:center;background:#f4f6f8;border-radius:4px;padding:8px 0;font-weight:800;font-size:17px;white-space:nowrap}.dose.two{color:#e77516}.dose.three{color:#d02430}.condition{text-align:center;margin-top:3px;border-radius:4px;font-weight:bold;font-size:10px;padding:3px 0;min-height:20px}.after{background:#edf0f2;color:#364454}.before{background:#ffe49d;color:#3a2c0a}.immediatelyBefore{background:#ffcfcf;color:#70252e}.immediatelyAfter{background:#bfe4ff;color:#1b4a70}.between{background:#e8d4ff;color:#5a2a80}.bed{background:#e7ebef;color:#34475d}.other{background:#f5dbb5;color:#673c1f}.nodose{visibility:hidden}.duration{font-size:11px;margin-top:9px}.legend{border:1px solid #efd5d3;border-radius:9px;padding:10px;margin-top:15px;font-size:11px;line-height:2}.legend em{font-style:normal;padding:4px 7px;border-radius:4px;margin-right:4px}.legend .orange{color:#df6c11;font-weight:800}.legend .red{color:#d02430;font-weight:800}.footer{margin-top:15px;border-top:1px solid #cbd3db;padding-top:10px;font-size:11px}.notice{margin:12px 0;padding:10px;border-left:4px solid #b96d54;background:#fff7ef;font-size:12px;line-height:1.6}.photo-preview{max-width:100%;max-height:125px;object-fit:contain;border-radius:6px}.empty{padding:25px;text-align:center;color:#778}.mini{color:#6c7887;font-size:10px} @media(max-width:1000px){.layout{grid-template-columns:1fr}.controls{max-width:900px;width:100%;margin:auto}.sheet{padding:22px 15px}.medtable td{padding:8px 5px}}@media(max-width:650px){.sheet{min-width:700px}.preview{overflow:auto}.sheetheader h1{font-size:22px}header strong{font-size:15px}}@page{size:A4 portrait;margin:12mm}@media print{html,body{background:white;margin:0;padding:0}header,.controls,.previewbar,.notice{display:none!important}.layout{display:block;margin:0;padding:0}.preview{overflow:visible}.sheet{box-shadow:none;width:100%;max-width:none;min-height:0;padding:0}.medtable{font-size:10px}.medtable tr{break-inside:avoid}.medtable td{font-size:10px;padding:6px}.medname{font-size:12px}.dose{font-size:14px}.sheetheader h1{font-size:23px}.footer{margin-top:10px}}
+
+/* Ver 2.4: compact dynamic-height rows, repeated table headers on printed pages */
+.sheet{min-height:0;padding:19px 18px 16px}
+.sheetheader{margin-bottom:8px}
+.sheetheader h1{font-size:24px}
+.medtable td{padding:6px 6px;font-size:11px;line-height:1.38}
+.medtable th{padding:6px 3px;font-size:11px}
+.medname{font-size:13px;margin-bottom:3px}
+.pillmock{height:35px;margin:2px 0}
+.pill{width:27px;height:27px;font-size:9px}
+.pack{font-size:9px;padding:1px 4px;margin-bottom:2px}
+.mocknotice{font-size:8px}
+.times{gap:2px}
+.timehead{padding:1px;font-size:10px}
+.dose{padding:4px 0;font-size:15px}
+.condition{margin-top:2px;min-height:15px;padding:1px 0;font-size:9px}
+.duration{margin-top:4px;font-size:10px}
+.medtable th:nth-child(1){width:23%}
+.medtable th:nth-child(2){width:24%}
+.medtable th:nth-child(3){width:35%}
+.medtable th:nth-child(4){width:18%}
+@media print{
+  @page{size:A4 portrait;margin:9mm}
+  .sheet{padding:0;min-height:0}
+  .sheetheader{margin-bottom:6px}
+  .sheetheader h1{font-size:20px}
+  .medtable thead{display:table-header-group}
+  .medtable tr{break-inside:avoid;page-break-inside:avoid}
+  .medtable th{padding:5px 3px;font-size:10px}
+  .medtable td{padding:5px 4px;font-size:10px;line-height:1.35}
+  .medname{font-size:11px;margin-bottom:2px}
+  .pillmock{height:28px;margin:2px 0}
+  .pill{width:23px;height:23px;font-size:8px}
+  .dose{font-size:13px;padding:3px 0}
+  .duration{font-size:9px}
+}
+
+/* Ver 2.5: paginate complete medication rows into physical A4 sheets. */
+.sheet{background:transparent;max-width:none;padding:0;box-shadow:none;min-height:0}
+.printpage{background:#fff;width:192mm;min-height:0;padding:3mm;box-shadow:0 3px 14px #18253e16;margin:0 auto 13px;break-after:page;page-break-after:always}
+.printpage:last-of-type{break-after:auto;page-break-after:auto}
+.printpage .medtable tr{break-inside:avoid;page-break-inside:avoid}
+.measurepage{visibility:hidden;position:absolute;left:-10000px;top:0;box-shadow:none;pointer-events:none}
+.printwarning{color:#a0412c;font-size:12px;background:#fff1e9;padding:8px}
+@media print{
+ @page{size:A4 portrait;margin:9mm}
+ .sheet{padding:0!important;margin:0!important}
+ .printpage{width:192mm;max-width:192mm;margin:0;padding:3mm;box-shadow:none;break-after:page;page-break-after:always}
+ .printpage:last-of-type{break-after:auto;page-break-after:auto}
+ .printwarning{display:none}
+ .medtable tr{break-inside:avoid!important;page-break-inside:avoid!important}
+ .medtable td{overflow-wrap:anywhere}
+}
+
+.pharmacy-settings{border-top:2px solid #e2e9ef;margin-top:18px;padding-top:14px}.pharmacy-card{margin-top:13px;border:1px solid #d9e0e6;border-radius:9px;padding:13px;font-size:12px;line-height:1.6;break-inside:avoid;page-break-inside:avoid}.pharmacy-card h2{margin:0 0 7px;font-size:19px}.pharmacy-card .hours{display:flex;gap:12px;flex-wrap:wrap;margin-top:7px}.pharmacy-card .noticebox{border-top:1px solid #d9e0e6;padding-top:8px;margin-top:9px;white-space:pre-wrap}.qr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:9px}.qr-slot{border:1px solid #d9e0e6;border-radius:7px;padding:8px;text-align:center;min-width:0;overflow-wrap:anywhere}.qr-placeholder{height:67px;width:67px;max-width:100%;margin:5px auto;background:#f2f4f7;display:grid;place-items:center;color:#8894a1;font-size:10px}.qr-slot small{display:block;white-space:pre-wrap}.pharmacy-card .demo{font-size:10px;color:#9a4b37;margin-top:7px}.pharmacy-card .qr-slot a{font-size:10px}@media print{.pharmacy-card{margin-top:10px}.qr-placeholder{height:58px;width:58px}}
+.qrpanel{border:2px solid #93b6db;border-radius:12px;padding:12px;margin:14px 0;background:#f8fbff}.qrpanel button{font-size:12px;padding:10px}.qrlabel{display:block;font-size:13px;font-weight:700}.qrpanel input[type=file]{max-width:100%;margin:8px 0}.qrpanel p{line-height:1.5}.qrpanel .buttonrow{flex-wrap:wrap}.qrpanel #qrReview button{margin:6px}.qrpanel .warn{color:#aa2730;font-weight:700}@media print{.qrpanel{display:none!important}}
+/* v3.2: print clarity and approximately 10 mm horizontal margins */
+body,.printpage,.sheet,.medtable{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN", "Hiragino Sans",Meiryo,sans-serif;font-weight:400;-webkit-font-smoothing:auto}
+.printpage{width:190mm;padding:0}
+.medtable td{font-size:12px;line-height:1.52;font-weight:400;color:#101820}
+.medtable th{font-size:12px;font-weight:700;color:#101820}
+.medname{font-size:14px;font-weight:700}
+.mocknotice{font-size:9px}
+.pharmacy-card{font-size:12px}
+.receipt-cut{border-top:2px dashed #666;margin:14px 0 9px;position:relative;padding-top:10px}
+.receipt-cut::before{content:"✂ 切り取り線";font-size:10px;color:#333;position:absolute;top:-15px;right:0;background:white;padding:0 5px}
+.receipt{border:1px solid #7d838b;padding:10px 12px;break-inside:avoid;page-break-inside:avoid;color:#111}
+.receipt h2{text-align:center;font-size:19px;letter-spacing:3px;margin:0 0 9px}
+.receipt-top,.receipt-sign{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.receipt-price{font-size:21px;font-weight:700;border-bottom:1px solid #555;padding:5px 2px;margin:8px 0}
+.reissue-mark{font-size:17px;color:#9e1b26;border:2px solid #9e1b26;padding:3px 10px;font-weight:700;letter-spacing:2px}
+.stamp-sample{border:2px solid #bc3333;color:#bc3333;border-radius:50%;width:64px;height:64px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;line-height:1.3;transform:rotate(-9deg);flex-shrink:0}
+.certificate h2{font-size:19px;text-align:center;margin:12px 0 20px}
+.certificate p{line-height:2}
+.certificate .cert-total{border-top:1px solid #888;border-bottom:1px solid #888;padding:14px 8px;font-weight:700;font-size:19px}
+.demo-watermark{font-weight:700;color:#ab3434;font-size:12px}
+@media print{
+ @page{size:A4 portrait;margin:10mm}
+ .printpage{width:190mm;max-width:190mm;margin:0;padding:0}
+ .medtable td{font-size:11.5px;line-height:1.45;padding:6px 5px}
+ .medtable th{font-size:11.5px;padding:6px 4px}
+ .medname{font-size:13px}
+ .sheetheader h1{font-size:21px}
+ .receipt,.receipt-cut,.certificate{break-inside:avoid;page-break-inside:avoid}
+}
+
+.pharmacy-compact{font-size:10px;line-height:1.3;padding:5px 0;border-top:1px solid #aaa;margin-top:7px}
+.receipt-unit{break-inside:avoid;page-break-inside:avoid}.receipt-cut{margin:10px 0 6px;padding-top:5px}.receipt{padding:6px 7px;border:1px solid #555}
+.receipt-heading,.receipt-patient{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:4px}.receipt-heading strong{font-size:16px;letter-spacing:2px}.receipt-heading span,.receipt-patient{font-size:10px}
+.receipt-summary,.receipt-points{width:100%;border-collapse:collapse;table-layout:fixed;margin:4px 0}.receipt-summary th,.receipt-points th{font-size:9px;border:1px solid #666;background:#f3f3f3;padding:3px 2px}.receipt-summary td,.receipt-points td{font-size:10px;border:1px solid #666;padding:4px 2px;text-align:right;white-space:nowrap}
+.receipt-bottom{display:grid;grid-template-columns:1.12fr 1fr;gap:9px;margin-top:5px}.receipt-details{font-size:9px}.receipt-details table{width:100%;border-collapse:collapse;font-size:9px;line-height:1.3}.receipt-details td{border-bottom:1px solid #ddd;padding:2px 3px;overflow-wrap:anywhere}.receipt-details td:last-child{text-align:right;white-space:nowrap;width:36px}.receipt-info{font-size:9px;line-height:1.35;overflow-wrap:anywhere}.stamp-row{display:flex;align-items:center;gap:7px;color:#9a2525}.stamp-row .stamp-sample{width:36px;height:36px;font-size:8px}.stamp-row b{font-size:9px}.reissue-mark{font-size:10px;padding:1px 4px;border-width:1px}.receipt-overflow{outline:2px solid #b33}
+@media print{.receipt-unit,.receipt{break-inside:avoid!important;page-break-inside:avoid!important}}
+
+/* Ver.3.4: A4 width utilization; 7mm CSS margin allows for extra print-driver whitespace. */
+@page { size:A4 portrait; margin:7mm !important; }
+.printpage { width:196mm !important; max-width:196mm !important; padding:0 !important; }
+.sheetheader { margin-bottom:5px !important; }
+.medtable th { padding:4px 3px !important; }
+.medtable td { padding:4px !important; line-height:1.38 !important; }
+.medname { margin:0 0 3px !important; }
+.pillmock { height:27px !important; margin:1px 0 !important; }
+.legend,.footer { margin-top:5px !important; padding-top:5px !important; }
+.receipt-cut { margin:6px 0 4px !important; }
+.receipt { padding:5px 6px !important; }
+.receipt-summary,.receipt-points{margin:3px 0 !important}
+.receipt-summary td,.receipt-points td{padding:3px 2px !important}
+.receipt-bottom{margin-top:3px !important}
+@media print{
+ @page{size:A4 portrait;margin:7mm !important}
+ .printpage{width:196mm !important;max-width:196mm !important;margin:0 !important;padding:0 !important}
+ .sheet{width:100%!important;margin:0!important}
+ .receipt-unit,.receipt{break-inside:avoid!important;page-break-inside:avoid!important}
+}
+
+/* v3.5 restore pharmacy information and SNS positions before receipt */
+.pharmacy-recovered{display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:7px;align-items:start;border-top:1px solid #a4a4a4;padding:5px 0;margin-top:6px;font-size:9px;line-height:1.35}
+.pharmacy-recovered .pharmacy-detail{min-width:0;overflow-wrap:anywhere}
+.pharmacy-recovered .pharmacy-detail b{font-size:11px}
+.pharmacy-social{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.social-mini{display:flex;flex-direction:column;text-align:center;align-items:center;font-size:8px;line-height:1.2}
+.social-mini b{font-size:9px}
+.qr-mini{height:43px;width:43px;display:grid;place-items:center;border:1px solid #9ba5b3;background:#f1f3f6;font-size:8px;color:#626f7a;overflow-wrap:anywhere}
+.social-mini small{font-size:7px;color:#333}
+@media print{.pharmacy-recovered{break-inside:avoid!important;page-break-inside:avoid!important}}
+
+/* v3.6: medication information, pharmacy details and SNS on same sheet when space permits */
+@page{size:A4 portrait;margin:10mm!important}
+.printpage{width:190mm!important;max-width:190mm!important;padding:0!important}
+.pharmacy-recovered{grid-template-columns:minmax(0,1fr) 118px!important;padding:4px 0!important;margin-top:4px!important;gap:5px!important}
+.pharmacy-recovered .pharmacy-detail{font-size:9px;line-height:1.28}
+.pharmacy-recovered .qr-mini{width:36px;height:36px}
+.medtable td{padding:3px 4px!important;line-height:1.37!important}
+.medtable th{padding:3px!important}
+.sheetheader{margin-bottom:5px!important}
+@media print{@page{size:A4 portrait;margin:10mm!important}.printpage{width:190mm!important;max-width:190mm!important;margin:0!important;padding:0!important}}
+
+/* Unified print: 10 mm physical A4 margin (printer dialog margins should not be added twice). */
+@page{size:A4 portrait;margin:10mm!important}
+@media print{.printpage{width:190mm!important;max-width:190mm!important;padding:0!important;margin:0!important}.medtable td{line-height:1.35!important;padding:4px!important}.pillmock{height:28px!important}.pill{height:22px!important;width:22px!important;font-size:8px!important}.pharmacy-recovered{font-size:9px!important}.printpage{break-after:page}.printpage:last-child{break-after:auto}}
+
+/* v4.2: A4 page-fit adjustments */
+@page{size:A4 portrait;margin:10mm!important}
+@media print{html,body{padding:0!important;margin:0!important;background:#fff!important}.sheet,.printpage{width:190mm!important;max-width:190mm!important;margin:0!important;padding:0!important;box-shadow:none!important}.printpage{break-after:page!important;page-break-after:always!important}.printpage:last-child{break-after:auto!important;page-break-after:auto!important}.pharmacy-compact,.medtable tr{break-inside:avoid!important;page-break-inside:avoid!important}}
+.pharmacy-recovered{display:grid;grid-template-columns:minmax(0,1fr) 120px!important;gap:6px!important;align-items:start;padding:4px 0!important;margin-top:5px!important}
+.pharmacy-recovered .pharmacy-detail{font-size:10px!important;line-height:1.3!important}
+.pharmacy-social{display:flex;justify-content:flex-end;gap:5px}
+.qr-mini{display:grid;place-items:center;width:36px;height:36px;border:1px solid #9da6b1;font-size:7px}
+.medtable td{padding:3px 4px!important;line-height:1.35!important}.medtable th{padding:3px!important}
+
+/* iPad OCR review responsive controls */
+#rxCandidates .rx-item .fieldrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px}
+#rxCandidates .rx-item input,#rxCandidates .rx-item select{box-sizing:border-box;max-width:100%;width:100%;min-width:0}
+#rxCandidates .rx-item label{min-width:0;display:block;overflow-wrap:anywhere}
+#rxCandidates{max-width:100%;overflow-wrap:anywhere}
+
+/* iPad OCR review: avoid horizontal overflow */
+#rxCandidateArea,#rxCandidates,.rx-candidate{min-width:0;max-width:100%;overflow-wrap:anywhere}
+#rxCandidateArea input,#rxCandidateArea select,#rxCandidateArea textarea{box-sizing:border-box;max-width:100%;min-width:0;width:100%!important}
+#rxCandidateArea .fieldrow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media(max-width:460px){#rxCandidateArea .fieldrow{grid-template-columns:1fr}}
+#localPhotoPanel input{box-sizing:border-box;width:100%;max-width:100%}#lpCatalog .lp-row{display:flex;align-items:center;gap:7px;border-top:1px solid #d5e2e7;padding:6px 0;font-size:12px}#lpCatalog img{height:42px;width:58px;object-fit:contain} .local-pill-photo{height:45px;max-width:100%;object-fit:contain;display:block;margin:3px auto} .photo-unverified{font-size:8px;color:#7c3434} @media print{#localPhotoPanel{display:none!important}}
+</style><style>.gs-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gs-unit{padding:8px;border:1px solid #bbccd9;border-radius:8px;background:#fff;min-width:0}.gs-unit h4{margin:0 0 6px;font-size:14px}.gs-cells{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}.gs-cell{min-width:0;min-height:35px;border:1px solid #b7c5d1;border-radius:4px;background:#f4f6f8;font-size:10px;padding:3px;overflow-wrap:anywhere}.gs-cell.match{background:#ffdddd;border:2px solid #c40000;color:#a00000;font-weight:800}.gs-cell.match b{display:block;font-size:10px}.gs-hit{border-left:4px solid #bb0000;padding:5px 9px;margin:5px 0;background:#fff;color:#a00000;font-weight:700}.gs-help{font-size:11px;color:#5a6670}@media(max-width:600px){.gs-map{grid-template-columns:1fr}}@media print{#gsShelfPanel{display:none!important}}</style></head><body><header><div><strong>💊 薬情メーカー 統合検証版 5.0</strong><small>処方確認・帳票作成の試作｜架空データ専用（修正版）</small></div><button onclick="window.print()">A4で印刷 / PDF保存</button></header><main class="layout"><section class="controls"><h2>処方情報を編集</h2><div class="printwarning"><b>統合検証版：QR・撮影OCR・手入力・薬情を一画面にまとめました。</b> 領収書・年間証明書は一時停止。薬剤画像の自前登録は試験対応。正式な薬剤マスター・処方箋QR（JAHIS）・監査は未対応のため、実際の患者さんへの交付には使わないでください。</div><p class="hint">薬剤ボタンを選び、用法や錠数を変えると右の薬情が更新されます。個人情報・実患者データは入力しないでください。</p><div class="fieldrow"><div class="field"><label>患者名（架空のみ）</label><input id="patient" value="サンプル患者"></div><div class="field"><label>交付日</label><input type="date" id="date" value="2026-10-17"></div></div><div class="qrpanel" id="qrpanel"><b>QR読取 → 薬情への反映（架空データ専用）</b><p class="hint">JAHIS11のレコード構造を試験解析できます。実処方箋での動作は未検証です。個人情報入りのQRは読み込ませないでください。</p><div class="buttonrow"><button type="button" id="qrDemo">① 模擬処方を読込</button><button type="button" id="qrCamera">② カメラでQR読取</button><button type="button" id="qrStop" class="secondary">停止</button></div><label class="qrlabel">③ 保存した模擬QR画像を選択 <input id="qrFile" type="file" accept="image/*" /></label><video id="qrVideo" muted playsinline autoplay hidden style="width:100%;max-height:220px;background:#000;margin-top:10px;border-radius:8px"></video><p id="qrStatus" role="status" class="hint">まだQRを読み取っていません。</p><div style="margin-top:10px;border-top:1px solid #bad0e8;padding-top:10px"><b>JAHISテストデータ解析（架空データのみ）</b><p class="hint">JAHIS11のCSVを貼り付け、薬品・用法・日数の候補を確認できます。分割QRの自動連結、Shift-JISの完全復号、複雑な用法は未対応です。</p><textarea id="jahisInput" rows="7" style="width:100%;font-family:monospace" placeholder="JAHIS11&#10;101,1,1,,14&#10;111,1,1,,毎食後服用,3&#10;201,1,1,1,1,,架空テスト薬A錠,3,1,錠&#10;241,1,1,1,3"></textarea><div class="buttonrow"><button type="button" id="jahisAnalyze">JAHISを解析</button><button type="button" class="secondary" id="jahisExample">架空サンプルを入力</button></div><div id="jahisOutput" role="status"></div></div><div id="qrReview" hidden style="background:#f0f6fc;padding:10px;border-radius:10px"></div></div><section class="photo-panel" style="background:#f5f9ff;border:2px solid #86a8ce;border-radius:12px;padding:12px;margin:14px 0">
+<b>④ QRがない処方箋：撮影して確認（架空のテスト処方箋のみ）</b>
+<p class="hint">iPadでは「写真を撮る」を選べます。画像は端末内でプレビューし、サーバーに送信しません。下の「文字認識」を押すと、写真の文字を抽出して確認できます。認識結果は処方内容へ自動反映しません。</p>
+<label style="display:block;margin:9px 0;font-weight:700">処方箋を撮影／画像を選択 <input id="rxPhoto" type="file" accept="image/*" capture="environment" style="display:block;margin-top:6px;max-width:100%"></label>
+<div class="field" style="margin:8px 0"><label for="rxCropMode">文字認識する範囲</label><select id="rxCropMode"><option value="lower">下半分（薬剤欄が下にある処方箋向け）</option><option value="bottom70">下70％</option><option value="full">全体</option><option value="manual" selected>指で薬剤欄を選択（推奨）</option></select><p class="hint">撮影後、認識範囲のプレビューで薬剤名・用法・日数がすべて見えるか確認してください。</p></div><div id="rxPhotoArea" hidden><div class="field"><label>画像補正</label><select id="rxEnhance"><option value="contrast">グレー＋コントラスト強調（推奨）</option><option value="gray">グレーのみ</option><option value="plain">補正なし</option></select></div><p class="hint">下の画像で薬剤欄を指で囲んでください。QRや印鑑は含めないでください。</p><div id="rxTouchFrame" style="position:relative;display:inline-block;max-width:100%;touch-action:none;user-select:none;border:1px solid #aab6c4;line-height:0"><img id="rxPhotoPreview" alt="架空テスト処方箋" style="display:block;max-width:100%;max-height:520px;width:auto;height:auto"><div id="rxSelection" hidden style="position:absolute;border:3px solid #0082c9;background:rgba(0,129,201,.13);pointer-events:none;box-sizing:border-box"></div></div><div class="buttonrow"><button type="button" id="rxResetSelection" class="secondary">範囲を選び直す</button></div><canvas id="rxCropPreview" aria-label="OCR対象範囲のプレビュー" style="display:block;max-width:100%;width:100%;border:2px solid #5683ae;background:#fff;margin-top:8px"></canvas><p id="rxPhotoStatus" class="hint">写真を確認してください。自動転記はされません。</p><div class="buttonrow"><button type="button" id="rxOcrStart">選択範囲のOCRを試す</button><button type="button" class="secondary" id="rxPhotoRemove">写真を消す</button></div><div id="rxOcrArea" hidden><label class="field" style="display:block;font-weight:700;margin-top:10px">認識結果（必ず原本と照合・修正）<textarea id="rxOcrText" spellcheck="false" rows="9" style="display:block;width:100%;font-size:14px;line-height:1.7;margin-top:5px"></textarea></label><button type="button" class="secondary" id="rxOcrCopy">認識結果をコピー</button><section id="masterMatchPanel" style="border:2px solid #4d88ad;border-radius:10px;margin:12px 0;padding:12px;background:#f4faff"><strong>Ver.4.6 医薬品名・規格の照合（端末内・検証用）</strong><p class="hint">手持ちの薬剤マスターCSVを読み込み、OCRの文字列から類似候補を表示します。未登録のマスターや未確認の薬剤は確定しません。CSVはこの画面内のみで処理し、保存・送信しません。</p><label>CSVファイル（UTF-8、先頭行に「薬剤名」「規格」または「name」「strength」）<input id="rxMasterFile" type="file" accept=".csv,text/csv" style="width:100%;max-width:100%"></label><p id="rxMasterStatus" role="status" class="hint">未読み込み・照合停止中</p><label style="display:block;margin:8px 0">OCRから照合する薬剤名の行（必要に応じて修正）<textarea id="rxMatchLines" rows="5" placeholder="例：クロルプロマジン塩酸塩錠 25mg" style="display:block;width:100%;box-sizing:border-box"></textarea></label><button type="button" id="rxMasterSuggest">候補を照合する</button><div id="rxMasterResults" aria-live="polite"></div><p class="hint">候補は参考表示のみ。用法・用量・日数の自動確定や薬情への自動反映はしません。</p></section><div id="rxCandidateArea" style="border:2px solid #c6a14c;padding:12px;margin:12px 0;border-radius:8px"><b>OCRからの候補抽出（厳格判定・試験）</b><p class="hint">薬剤名、1回量、用法、日数を原本と照合・修正してから反映します。薬剤名・1回量・日数・用法が揃わない場合は候補を出しません。対応外は手動入力してください。</p><button type="button" id="rxParse">処方候補を抽出</button><div id="rxCandidates"></div></div><p class="hint">読み誤り、数字や用法の欠落があり得ます。薬情へ自動反映・自動印刷はしません。</p></div></div>
+<p class="hint" style="color:#973e29">注意：本版は薬剤データベース・JAHIS連携・監査が未完成で、OCRも試験中です。実患者の処方箋は取り込まず、患者交付にも使用しないでください。OCRの追加プログラムと日本語データはインターネットから取得します。</p>
+</section><section id="quickImport" style="background:#f7fafb;border:2px solid #6c879b;border-radius:12px;padding:12px;margin:12px 0">
+<b>処方箋の内容をまとめて入力（OCR補正・手入力の両方に使用）</b>
+<p class="hint">1行に「薬剤名｜1回量｜服用時点｜日数」を入力。例：サンプル薬A 10mg｜1｜朝夕・食後｜28。OCRの文章を読み、ここに修正入力することもできます。</p>
+<textarea id="quickText" rows="5" style="width:100%;font-size:15px;padding:9px" spellcheck="false">サンプル薬A 10mg｜1｜朝夕・食後｜28
+サンプル薬B 5mg｜2｜朝・食後｜14</textarea>
+<div class="buttonrow"><button type="button" id="quickCheck">入力を検査・確認</button><button type="button" class="secondary" id="quickTemplate">入力例に戻す</button></div>
+<div id="quickReview" aria-live="polite"></div></section>
+<section id="validationPanel" style="background:#fff4e8;border:1px solid #dd9d60;padding:12px;border-radius:10px;margin:12px 0"><b>検証状況</b><p id="validationStatus" class="hint">処方内容、用法、薬剤説明と印刷状態を必ず照合してください。</p><button type="button" id="runAudit" class="secondary">現在の薬情を検査</button></section>
+<section id="gsShelfPanel" style="border:2px solid #8aa6bd;border-radius:12px;padding:12px;margin:14px 0;background:#f5f9ff"><h3>GS1登録・棚図検索（試験版）</h3><p class="hint">GS1のGTINを読取り、薬品名・規格・写真・保管場所と結び付けます。GTINだけでは薬品名を特定できません。実物の名称・規格を必ず確認してください。</p><div class="field"><label>GS1バーコード内容（手入力・貼り付けも可能）</label><input id="gsRaw" placeholder="(01)14987012345678 またはバーコードを読取"></div><div class="buttonrow"><button id="gsCamera" type="button">カメラでGS1読取</button><button id="gsStop" type="button" class="secondary">カメラ停止</button><button id="gsParse" type="button" class="secondary">コードを解析</button></div><video id="gsVideo" autoplay playsinline muted hidden style="width:100%;max-height:230px;background:#161616;border-radius:8px"></video><p id="gsStatus" class="hint" role="status">未読取。カメラ読取は対応ブラウザ・HTTPS・カメラ許可が必要です。</p><div class="fieldrow"><div class="field"><label>GTIN（自動抽出・編集可）</label><input id="gsGtin" placeholder="14桁"></div><div class="field"><label>棚分類</label><select id="gsShelf"><option value="A棚">A棚</option><option value="B棚">B棚</option><option value="C棚">C棚</option><option value="D棚">D棚</option><option value="引き出し">引き出し</option><option value="冷所">冷所</option><option value="その他">その他</option></select></div></div><div class="fieldrow"><div class="field"><label>段・行番号</label><input id="gsRow" type="number" min="1" max="30" value="1"></div><div class="field"><label>列・引き出し番号</label><input id="gsCol" placeholder="1 または a1 / b2"></div></div><div class="buttonrow"><button id="gsApply" type="button">GTIN・棚位置を登録欄へ反映</button></div><hr><h3>薬局棚図・検索</h3><div class="field"><label>薬品名・規格・GTINを検索</label><input id="gsSearch" type="search" placeholder="薬品名の一部を入力"></div><p class="hint">検索すると登録薬があるマスを赤色にします。実際の棚数・段数は後から変更できます。</p><div id="gsMap" class="gs-map"></div><div id="gsHits" class="hint"></div></section><section id="localPhotoPanel" style="border:2px solid #7ca7ba;border-radius:12px;padding:12px;margin:14px 0;background:#f7fcff"><h3 style="margin:0 0 8px">薬局専用 薬剤写真・保管場所台帳</h3><p class="hint">現在は端末内の専用データベースに保存します。複数端末間の自動同期は未実装です。患者情報は登録しないでください。薬品名・規格・コードの一致を確認して登録します。</p><div class="field"><label>薬品名・規格（正確に）</label><input id="lpName" placeholder="例：テスト錠10mg"></div><div class="field"><label>薬剤コード（任意・YJなど）</label><input id="lpCode" placeholder="分かる場合に入力"></div><div class="field"><label>薬剤の効能・効果（薬剤師が確認して登録）</label><textarea id="lpEffect" rows="2" placeholder="患者向け説明。確認できた内容のみ記入"></textarea></div><div class="field"><label>副作用・注意事項（薬剤師が確認して登録）</label><textarea id="lpCaution" rows="2" placeholder="重篤な副作用・注意事項を省略しない"></textarea></div><div class="field"><label>登録者（薬局内の識別名）</label><input id="lpEditor" placeholder="例：薬剤師A ※個人認証ではありません"></div><div class="field"><label>保管場所（棚・番号）</label><input id="lpShelf" list="lpShelfOptions" placeholder="例：A棚 3段目 5番 ／ 引き出し b4"><datalist id="lpShelfOptions"><option value="A棚"><option value="B棚"><option value="C棚"><option value="D棚"><option value="引き出し a1"><option value="引き出し b1"><option value="引き出し c1"><option value="冷所"><option value="劇薬保管場所"><option value="向精神薬保管場所"></datalist><p class="hint">棚写真を参考に、実際の保管位置を確認して入力。自動判定はしません。</p></div><div class="field"><label>保管場所の補足（任意）</label><input id="lpShelfNote" placeholder="例：上から4段目・左から2番目"></div><div class="field"><label>登録済み薬剤を検索（薬品名・規格・棚番号）</label><input id="lpSearch" type="search" placeholder="例：A棚 / アスピリン / b4"></div><div class="field"><label>写真撮影・画像選択</label><input id="lpFile" type="file" accept="image/*" capture="environment"></div><img id="lpPreview" hidden alt="登録写真プレビュー" style="width:160px;max-width:100%;border:1px solid #bbb;border-radius:6px;margin:7px 0"><div class="buttonrow"><button id="lpSave" type="button">薬剤台帳を登録・更新（写真は初回必須）</button><button id="lpUseCurrent" type="button" class="secondary">編集中の薬剤名を入力</button></div><p id="lpStatus" role="status" class="hint"></p><div class="buttonrow"><button type="button" id="lpExport" class="secondary">写真台帳をバックアップ</button><label style="display:inline-block;font-size:12px">台帳を復元<input type="file" id="lpImport" accept="application/json,.json" style="max-width:170px"></label></div><div id="lpCatalog"></div></section><div id="picker" class="drugpicker"></div><div id="editor"></div><details class="pharmacy-settings"><summary style="font-weight:800;cursor:pointer">薬局基本設定・お知らせ・SNS</summary><p class="hint">薬局の情報のみ、この端末のブラウザに保存できます。患者情報は保存しません。</p><div id="pharmacyFields"></div><button type="button" id="savePharmacy" class="secondary">薬局設定をこの端末に保存</button><p id="savedMessage" class="hint"></p></details><div class="field" style="display:none;border:2px solid #b5c5d4;padding:11px;border-radius:9px;margin-top:15px"><b>領収書・支払証明書（架空データ試験）</b><p class="hint">実会計との連携は未実装です。患者へ交付できる正式な領収書ではありません。</p><div class="fieldrow"><div class="field"><label>領収金額（円）</label><input id="receiptAmount" type="number" min="0" step="1" value="1200"></div><div class="field"><label>領収書の種類</label><select id="receiptMode"><option value="normal">通常発行</option><option value="reissue">再発行</option></select></div></div><div class="fieldrow"><div class="field"><label>保険合計点数</label><input type="number" id="insurancePoints" value="687"></div><div class="field"><label>負担割合（％）</label><select id="copayPercent"><option>10</option><option>20</option><option selected>30</option></select></div></div><div class="fieldrow"><div class="field"><label>保険外金額（円）</label><input type="number" id="outsideAmount" value="0"></div><div class="field"><label>未収金額（円）</label><input type="number" id="unpaidAmount" value="0"></div></div><div class="fieldrow"><div class="field"><label>調剤技術料（点）</label><input type="number" id="techPoints" value="122"></div><div class="field"><label>薬学管理料（点）</label><input type="number" id="managePoints" value="165"></div></div><div class="fieldrow"><div class="field"><label>薬剤料（点）</label><input type="number" id="drugPoints" value="396"></div><div class="field"><label>その他（点）</label><input type="number" id="otherPoints" value="4"></div></div><div class="field"><label>明細（項目名,点数 を1行ずつ）</label><textarea id="receiptDetails">調剤基本料,47&#10;体制加算,27&#10;薬剤調製料,24&#10;内服薬調剤管理料,60&#10;服薬管理指導料,45&#10;調剤ベースアップ評価料,4</textarea></div><div class="field"><label>処方元（架空データ）</label><input id="issuingClinic" value="サンプルクリニック"></div><label style="display:block;font-size:12px"><input type="checkbox" id="showReceipt" checked> 薬情の最後に領収書を添付する</label><label style="display:block;font-size:12px;margin-top:10px"><input type="checkbox" id="showAnnual"> 年間支払証明書（別ページ）も印刷</label><div class="fieldrow"><div class="field"><label>対象年</label><input id="certificateYear" type="number" value="2026" min="2000" max="2100"></div><div class="field"><label>年間支払総額（円・仮入力）</label><input id="certificateAmount" type="number" min="0" value="12000"></div></div><p class="hint">印影は「見本」の表示です。正式な薬局印データの登録と発行履歴管理は未実装。</p></div><div class="buttonrow"><button id="add">＋ 薬を追加</button><button id="remove" class="danger">選択薬を削除</button></div><div class="buttonrow"><button id="reset" class="secondary">サンプルに戻す</button><button onclick="window.print()">印刷 / PDF保存</button></div><div class="notice"><b>この版でできること：</b>薬情の編集・表示・印刷。A4に6〜7剤を目標に自動配置。行を分割せずページごとに配置。<br><b>未実装：</b>処方箋QR・OCR読み取り、実薬剤マスター、監査、電子保存、ファーミー連携。入力データはサーバーに送信・保存しません。画面が白い場合はSafariで開いてください。</div></section><section class="preview"><div class="previewbar"><b>薬剤情報提供書プレビュー（領収書は後日）</b><span>横にスクロールして確認できます</span></div><article id="sheet" class="sheet"></article></section></main>
+<script>
+const original=[{name:'サンプル薬A 10mg',effect:'血圧を下げる働きがある薬の説明を掲載します。（架空の説明）',caution:'主な注意事項を表示します。実際の薬剤情報ではありません。',doses:[1,0,0,0],conditions:['食後','','',''],days:28,pack:false},{name:'サンプル薬B 5mg',effect:'胃の症状に関する説明文の例です。（架空の説明）',caution:'主な副作用・注意事項欄の例です。',doses:[2,0,2,0],conditions:['食前','','食前',''],days:28,pack:true},{name:'サンプル薬C 20mg',effect:'アレルギー症状に関する説明文の例です。（架空の説明）',caution:'主な副作用・注意事項欄の例です。',doses:[1,1,1,0],conditions:['食直後','食直後','食直後',''],days:14,pack:false},{name:'サンプル薬D 2mg',effect:'気管支についての説明文の例です。（架空の説明）',caution:'主な副作用・注意事項欄の例です。',doses:[0,3,0,0],conditions:['','食間','',''],days:28,pack:true},{name:'サンプル薬E 10mg',effect:'架空の説明文です。',caution:'注意事項の例です。',doses:[1,0,1,0],conditions:['食後','','食後',''],days:21,pack:false},{name:'サンプル薬F 5mg',effect:'この薬についての説明文を記載します。文章が長い薬は自動的に行が高くなります。',caution:'注意事項が多い場合も、内容を削らずに行の高さを増やします。これは試作用の文章です。',doses:[1,1,1,0],conditions:['食前','食前','食前',''],days:14,pack:false},{name:'サンプル薬G 20mg',effect:'架空の説明文です。',caution:'注意事項の例です。',doses:[0,0,0,2],conditions:['','','','就寝前'],days:28,pack:false}];let drugs=JSON.parse(JSON.stringify(original)),active=0;const $=s=>document.querySelector(s);const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const conditionClass={'食後':'after','食前':'before','食直前':'immediatelyBefore','食直後':'immediatelyAfter','食間':'between','就寝前':'bed','その他':'other'};const times=['朝','昼','夕','寝'];const conditions=['食後','食前','食直前','食直後','食間','就寝前','その他'];function picker(){ $('#picker').innerHTML=drugs.map((d,i)=>`<button class="${i===active?'active':''}" data-pick="${i}">薬 ${i+1}</button>`).join('');document.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{active=+b.dataset.pick;render()})}function compactDraft(text,limit){
+ // Demo-only conservative proposal: normalize repeated spaces and exact repeated sentences;
+ // never remove unique statements, medication warnings, or safety content.
+ const normalized=String(text||'').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+ const parts=normalized.match(/[^。！？\n]+[。！？]?|\n/g)||[];
+ const seen=new Set();let out='';
+ for(const part of parts){const key=part.trim();if(!key||!seen.has(key)){out+=part;if(key)seen.add(key)}}
+ return {text:out.trim(),within:out.length<=limit};
+}
+function summaryPanel(d){return `<div class="field" style="background:#f1f6fb;padding:12px;border-radius:10px"><b>標準モード：説明文の整理（提案のみ）</b><p style="font-size:12px">効能2〜3行・注意3〜5行を目標にします。重複・余分な空白だけ整理し、重要事項は削りません。内容を確認してから適用してください。</p><button type="button" id="suggestText" style="margin:5px 0">短縮案を表示</button><div id="draftArea"></div></div>`}
+function editor(){const d=drugs[active];$('#editor').innerHTML=`<div class="field"><label>薬品名（架空）</label><input data-key="name" value="${escapeHTML(d.name)}"></div><div class="field"><label>効果の説明（架空）</label><textarea data-key="effect">${escapeHTML(d.effect)}</textarea></div><div class="field"><label>注意事項（架空）</label><textarea data-key="caution">${escapeHTML(d.caution)}</textarea></div><div class="field"><label>服用量（0＝服用しない）</label><div class="timeinputs">${times.map((t,i)=>`<div><label>${t}</label><input type="number" min="0" max="99" step="0.5" data-dose="${i}" value="${d.doses[i]}"></div>`).join('')}</div></div><div class="field"><label>服用条件（各時点）</label><div class="timeinputs">${times.map((t,i)=>`<div><label>${t}</label><select data-condition="${i}"><option value="">―</option>${conditions.map(c=>`<option value="${c}" ${d.conditions[i]===c?'selected':''}>${c}</option>`).join('')}</select></div>`).join('')}</div></div><div class="fieldrow"><div class="field"><label>日数</label><input type="number" min="1" max="365" data-key="days" value="${d.days}"></div><div class="field"><label>一包化</label><select data-key="pack"><option value="false" ${!d.pack?'selected':''}>なし</option><option value="true" ${d.pack?'selected':''}>あり</option></select></div></div>${summaryPanel(d)}`;document.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('input',()=>{const k=el.dataset.key;d[k]=k==='days'?Number(el.value):k==='pack'?el.value==='true':el.value;sheet()}));document.querySelectorAll('[data-dose]').forEach(el=>el.addEventListener('input',()=>{d.doses[+el.dataset.dose]=Math.max(0,Number(el.value)||0);sheet()}));document.querySelectorAll('[data-condition]').forEach(el=>el.addEventListener('change',()=>{d.conditions[+el.dataset.condition]=el.value;sheet()}));
+ $('#suggestText').onclick=()=>{const a=compactDraft(d.effect,75),b=compactDraft(d.caution,125);$('#draftArea').innerHTML=`<p style="font-size:12px">${a.within&&b.within?'目標文字数内の候補です。':'重要な内容を保持するため、長い文章はそのまま残します。必要なら薬剤師が編集してください。'}</p><label>効能・効果の候補</label><textarea id="draftEffect">${escapeHTML(a.text)}</textarea><label>注意事項の候補</label><textarea id="draftCaution">${escapeHTML(b.text)}</textarea><button type="button" id="applyDraft">確認して適用</button>`;$('#applyDraft').onclick=()=>{if(!confirm('原文と比較し、重要事項が保持されていることを確認しましたか？'))return;d.effect=$('#draftEffect').value;d.caution=$('#draftCaution').value;render()}}}function headerHTML(page,total){const date=$('#date').value;const f=date?date.replace(/-/g,'/'):'';return `<div class="sheetheader"><div><h1>💊 お薬の説明書</h1><small>薬の飲み方・効能・注意事項</small></div><div style="text-align:right"><b>${escapeHTML($('#patient').value)} 様</b><br><small>${f}</small><br><small>見本・印刷検証用　${page} / ${total}</small></div></div>`}
+const colHTML='<colgroup><col style="width:23%"><col style="width:24%"><col style="width:35%"><col style="width:18%"></colgroup>';
+const theadHTML='<thead><tr><th>お薬の名前</th><th>効能・効果</th><th>用法・用量</th><th>注意すること</th></tr></thead>';
+function rowHTML(d,i){return `<tr><td><div class="medname">${escapeHTML(d.name)}</div>${d.pack?'<span class="pack">一包化</span>':''}${localPhotoHTML(d,i)}</td><td>${escapeHTML(d.effect)}</td><td><div class="times">${times.map(t=>`<div class="timehead">${t}</div>`).join('')}${d.doses.map(v=>`<div class="dose ${v>=3?'three':v>=2?'two':''}">${v>0?escapeHTML(v)+'錠':'―'}</div>`).join('')}${d.conditions.map((c,i)=>`<div class="condition ${d.doses[i]>0?(conditionClass[c]||'other'):'nodose'}">${d.doses[i]>0?escapeHTML(c||'時間指定'):'―'}</div>`).join('')}</div><div class="duration">${escapeHTML(d.days)}日分　（服用条件は上欄参照）</div></td><td>${escapeHTML(d.caution)}</td></tr>`}
+let paginationTimer=0;
+
+const defaultPharmacy={name:'一番街薬局',address:'〒890-0053 鹿児島県鹿児島市中央町23-21 アエールタワー203-2',phone:'099-255-9807',pharmacist:'今出 唯史',hours:'月・火・水・金・土 9:00〜18:00',closed:'木・日・祝日',notice:'薬局からのお知らせを入力してください。',social:[{name:'公式LINE',url:'',desc:'友だち追加はこちら'},{name:'Instagram',url:'',desc:'薬局からの情報をご案内'},{name:'その他SNS',url:'',desc:'サービスのご案内'}]};
+let pharmacy=JSON.parse(JSON.stringify(defaultPharmacy));try{const saved=localStorage.getItem('yakujou-pharmacy-v27');if(saved){const obj=JSON.parse(saved);if(obj&&typeof obj==='object')pharmacy={...pharmacy,...obj}}}catch(e){}
+function pharmacyEditor(){const keys=[['name','薬局名'],['address','所在地'],['phone','電話番号'],['pharmacist','薬剤師'],['hours','開局時間'],['closed','休業日'],['notice','薬局からのお知らせ']];$('#pharmacyFields').innerHTML=keys.map(([k,label])=>`<div class="field"><label>${label}</label>${k==='notice'?`<textarea data-pharmacy="${k}">${escapeHTML(pharmacy[k])}</textarea>`:`<input data-pharmacy="${k}" value="${escapeHTML(pharmacy[k])}">`}</div>`).join('')+'<b>QRコード集（URL未入力は空欄表示）</b>'+pharmacy.social.map((o,i)=>`<div class="field"><label>QR ${i+1}：タイトル</label><input data-social="${i}" data-prop="name" value="${escapeHTML(o.name)}"><label>リンクURL（https://...）</label><input data-social="${i}" data-prop="url" value="${escapeHTML(o.url)}"><label>QR下の説明</label><textarea data-social="${i}" data-prop="desc">${escapeHTML(o.desc)}</textarea></div>`).join('');document.querySelectorAll('[data-pharmacy]').forEach(el=>el.addEventListener('input',()=>{pharmacy[el.dataset.pharmacy]=el.value;sheet()}));document.querySelectorAll('[data-social]').forEach(el=>el.addEventListener('input',()=>{pharmacy.social[+el.dataset.social][el.dataset.prop]=el.value;sheet()}));$('#savePharmacy').onclick=()=>{try{localStorage.setItem('yakujou-pharmacy-v27',JSON.stringify(pharmacy));$('#savedMessage').textContent='薬局設定をこの端末に保存しました。'}catch(e){$('#savedMessage').textContent='保存できませんでした。プライベートモードなどを確認してください。'}}}
+function pharmacyHTML(){return `<section class="pharmacy-card"><h2>${escapeHTML(pharmacy.name)}</h2><div>${escapeHTML(pharmacy.address)}</div><div>電話：${escapeHTML(pharmacy.phone)}　薬剤師：${escapeHTML(pharmacy.pharmacist)}</div><div class="hours"><span>開局：${escapeHTML(pharmacy.hours)}</span><span>休業：${escapeHTML(pharmacy.closed)}</span></div><div class="noticebox"><b>薬局からのお知らせ</b><div>${escapeHTML(pharmacy.notice)}</div></div><h3 style="font-size:13px;margin:11px 0 4px">公式LINE・SNSのご案内</h3><div class="qr-grid">${pharmacy.social.map(o=>`<div class="qr-slot"><b>${escapeHTML(o.name)}</b><div class="qr-placeholder">QR未登録</div><small>${escapeHTML(o.desc)}</small>${o.url?`<small>リンク登録済（QR生成は今後対応）</small>`:''}</div>`).join('')}</div><div class="demo">※ QR画像は未実装です。URLを入力しても読み取れるQRはまだ生成されません。</div></section>`}
+
+
+function demoStamp(){return `<div class="stamp-sample" aria-label="印影見本">印影<br>見本</div>`}
+function receiptHTML(){
+ if(!$('#showReceipt').checked)return '';
+ const n=id=>Math.max(0,Math.round(Number($('#'+id).value)||0));const yen=id=>n(id).toLocaleString('ja-JP')+'円';
+ const details=($('#receiptDetails').value||'').split(/\n/).filter(x=>x.trim()).slice(0,35).map(x=>{const a=x.split(/[,，\t]/);return `<tr><td>${escapeHTML(a.slice(0,-1).join('、')||a[0])}</td><td>${escapeHTML(a.length>1?a.at(-1):'—')}</td></tr>`}).join('');
+ return `<div class="receipt-unit"><div class="receipt-cut"></div><section class="receipt receipt-detailed"><div class="receipt-heading"><strong>領収書 兼 明細書</strong><span>発行日 ${escapeHTML($('#date').value.replace(/-/g,'/'))}　${$('#receiptMode').value==='reissue'?'<b class="reissue-mark">再発行</b>':''}</span></div><div class="receipt-patient"><b>${escapeHTML($('#patient').value)} 様</b><span>保険診療　負担 ${n('copayPercent')}％</span></div><table class="receipt-summary"><tr><th>保険合計</th><th>負担金額</th><th>保険外金額</th><th>未収金額</th><th>領収金額</th></tr><tr><td>${n('insurancePoints')}点</td><td>${(Math.round(n('insurancePoints')*n('copayPercent')/100)*10).toLocaleString('ja-JP')}円</td><td>${yen('outsideAmount')}</td><td>${yen('unpaidAmount')}</td><td><b>${yen('receiptAmount')}</b></td></tr></table><table class="receipt-points"><tr><th>調剤技術料</th><th>薬学管理料</th><th>薬剤料</th><th>その他</th></tr><tr><td>${n('techPoints')}点</td><td>${n('managePoints')}点</td><td>${n('drugPoints')}点</td><td>${n('otherPoints')}点</td></tr></table><div class="receipt-bottom"><div class="receipt-details"><b>調剤報酬明細（仮入力）</b><table>${details}</table></div><div class="receipt-info">調剤日 ${escapeHTML($('#date').value.replace(/-/g,'/'))}<div>処方元 ${escapeHTML($('#issuingClinic').value)}</div><b>${escapeHTML(pharmacy.name)}</b><div>${escapeHTML(pharmacy.address)}</div><div>TEL ${escapeHTML(pharmacy.phone)}</div><div class="stamp-row">${demoStamp()} <b>見本・会計未連携</b></div></div></div></section></div>`;
+}
+function certificateHTML(){
+ const year=escapeHTML($('#certificateYear').value);
+ const value=Number($('#certificateAmount').value||0);
+ const amount=Number.isFinite(value)&&value>=0?Math.round(value).toLocaleString('ja-JP'):'—';
+ return `<section class="certificate"><p class="demo-watermark">見本・年間会計データ未連携・正式な証明書ではありません</p><h2>年間支払証明書</h2><p>患者氏名：${escapeHTML($('#patient').value)} 様</p><p>対象期間：${year}年1月1日〜${year}年12月31日</p><p class="cert-total">年間支払額　￥${amount} 円（仮入力）</p><p>上記の金額は画面で手入力された試験用の値です。実際のお支払記録を証明するものではありません。</p><p>発行日：${escapeHTML($('#date').value.replace(/-/g,'/'))}</p><div class="receipt-sign"><div>${escapeHTML(pharmacy.name)}<br>${escapeHTML(pharmacy.address)}</div>${demoStamp()}</div></section>`;
+}
+
+function sheet(){clearTimeout(paginationTimer);paginationTimer=setTimeout(buildPages,30)}
+function buildPages(){
+ const root=$('#sheet');root.innerHTML='';const limit=276/25.4*96, pages=[];
+ function put(html){const p=document.createElement('section');p.className='printpage';p.innerHTML=html;root.appendChild(p);pages.push(p);return p}
+ function medPage(){return put(headerHTML(pages.length+1,1)+`<table class="medtable">${colHTML}${theadHTML}<tbody></tbody></table>`)}
+ function tooTall(p){return p.getBoundingClientRect().height>limit}
+ let page=medPage();drugs.forEach((d,i)=>{let body=page.querySelector('tbody');body.insertAdjacentHTML('beforeend',rowHTML(d,i));if(tooTall(page)&&body.children.length>1){body.lastElementChild.remove();page=medPage();page.querySelector('tbody').insertAdjacentHTML('beforeend',rowHTML(d,i))}});
+ const social=(pharmacy.social||[]).slice(0,2).map(o=>`<div class="social-mini"><b>${escapeHTML(o.name)}</b><span class="qr-mini">QR未登録</span><small>${escapeHTML(o.desc||'')}</small></div>`).join('');
+ const footer=`<section class="pharmacy-compact pharmacy-recovered"><div class="pharmacy-detail"><b>${escapeHTML(pharmacy.name)}</b><div>${escapeHTML(pharmacy.address)}</div><div>TEL ${escapeHTML(pharmacy.phone)}　薬剤師 ${escapeHTML(pharmacy.pharmacist)}</div><div>開局 ${escapeHTML(pharmacy.hours)}　休業 ${escapeHTML(pharmacy.closed)}</div><div>${escapeHTML(pharmacy.notice)}</div></div><div class="pharmacy-social">${social}</div></section>`;
+ page.insertAdjacentHTML('beforeend',footer);
+ if(tooTall(page)){page.querySelector(':scope > .pharmacy-compact').remove();const extra=put(headerHTML(pages.length+1,1)+footer);if(tooTall(extra))extra.classList.add('receipt-overflow')}
+ pages.forEach((p,i)=>{const marker=p.querySelector('.sheetheader small:last-child');if(marker)marker.textContent='見本・印刷検証用 '+(i+1)+' / '+pages.length});
+}
+window.addEventListener('beforeprint',buildPages);
+window.addEventListener('resize',()=>{clearTimeout(paginationTimer);paginationTimer=setTimeout(buildPages,150)});
+['receiptAmount','receiptMode','showReceipt','showAnnual','certificateYear','certificateAmount','insurancePoints','copayPercent','outsideAmount','unpaidAmount','techPoints','managePoints','drugPoints','otherPoints','receiptDetails','issuingClinic'].forEach(id=>{$('#'+id).addEventListener('input',sheet);$('#'+id).addEventListener('change',sheet)});
+function render(){picker();editor();sheet()}$('#patient').oninput=sheet;$('#date').oninput=sheet;$('#add').onclick=()=>{drugs.push({name:`サンプル薬${drugs.length+1}`,effect:'説明文（架空）',caution:'注意事項（架空）',doses:[1,0,0,0],conditions:['食後','','',''],days:14,pack:false});active=drugs.length-1;render()};$('#remove').onclick=()=>{if(drugs.length===1){alert('最低1剤必要です');return}drugs.splice(active,1);active=Math.max(0,active-1);render()};$('#reset').onclick=()=>{drugs=JSON.parse(JSON.stringify(original));active=0;render()};pharmacyEditor();render();
+
+// Dedicated DEMO-only QR bridge: do not send QR or patient data to servers.
+(function(){
+ const byId=id=>document.getElementById(id);
+ const example={type:'YAKUJOU_DEMO_V1',patient:'テスト患者',medicines:[{name:'サンプル薬A 10mg',am:1,noon:0,pm:0,bed:0,when:'食後',days:14},{name:'サンプル薬B 5mg',am:2,noon:0,pm:2,bed:0,when:'食前',days:7}]};
+ let pending=null,media=null,scan=false,libLoading=null;
+ const status=(message,bad=false)=>{byId('qrStatus').textContent=message;byId('qrStatus').style.color=bad?'#b42318':'#146c43'};
+ function getDemoData(data){
+  const v=typeof data==='string'?JSON.parse(data):data;
+  if(v?.type!=='YAKUJOU_DEMO_V1'||!Array.isArray(v.medicines)||v.medicines.length<1||v.medicines.length>30)throw Error('架空テストQR形式ではありません。正式な処方箋QRには対応していません。');
+  if(v.patient!=='テスト患者')throw Error('この公開版では「テスト患者」という架空名だけ使用できます。');
+  const accepted=['食後','食前','食直前','食直後','食間','就寝前','その他'];
+  return {patient:v.patient,medicines:v.medicines.map(m=>{
+   if(typeof m.name!=='string'||!/^サンプル薬[A-Za-zＡ-Ｚａ-ｚ0-9０-９ ]/.test(m.name)||m.name.length>70)throw Error('架空のサンプル薬のみ読み込めます。');
+   const amounts=['am','noon','pm','bed'].map(k=>{const x=Number(m[k]??0);if(!Number.isFinite(x)||x<0||x>20)throw Error('服用量の値が不正です。');return x});
+   const days=Number(m.days);if(!Number.isInteger(days)||days<1||days>365)throw Error('日数が不正です。');
+   const when=String(m.when||'食後');if(!accepted.includes(when))throw Error('未知の服用条件です。');
+   return {name:m.name,doses:amounts,conditions:amounts.map((x,i)=>x?(i===3&&when==='就寝前'?'就寝前':when):''),days,pack:false,effect:'説明文は未登録です。正式な医薬品情報との照合が必要です。',caution:'副作用・注意事項は未登録です。正式な医薬品情報との照合が必要です。'};
+  })};
+ }
+ function readData(data){try{if(typeof data==='string' && /^\s*JAHIS\d+/.test(data)){document.getElementById('jahisInput').value=data;window.inspectJahis(data);status('JAHISレコードを抽出しました。内容を確認してください。');return true}pending=getDemoData(data);const box=byId('qrReview');box.hidden=false;box.innerHTML='<b>取込前の確認</b><p>患者：テスト患者（架空）／ '+pending.medicines.length+'剤</p>'+pending.medicines.map(m=>'<div style="padding:5px 0;border-top:1px solid #cbd5e1"><b>'+escapeHTML(m.name)+'</b><br>朝 '+m.doses[0]+'・昼 '+m.doses[1]+'・夕 '+m.doses[2]+'・寝 '+m.doses[3]+' ／ '+escapeHTML(m.conditions.find(Boolean)||'指定なし')+' ／ '+m.days+'日</div>').join('')+'<p class="warn">この試作は薬剤の写真・効能・注意事項を取得しません。印刷物の患者交付は禁止です。</p><button type="button" id="qrApply">内容を確認して薬情へ反映</button><button type="button" id="qrDiscard" class="secondary">破棄</button>';
+  byId('qrApply').onclick=()=>{drugs=pending.medicines;active=0;byId('patient').value='テスト患者';box.hidden=true;pending=null;render();status('模擬処方を薬情に反映しました。説明・写真は未登録です。')};
+  byId('qrDiscard').onclick=()=>{pending=null;box.hidden=true;status('模擬処方を破棄しました。')};status('模擬QRを解析しました。内容確認後に反映してください。');return true;
+ }catch(e){pending=null;byId('qrReview').hidden=true;status('解析できません：'+e.message,true);return false}}
+ function loadLibrary(){if(typeof window.jsQR==='function')return Promise.resolve();if(libLoading)return libLoading;libLoading=new Promise((resolve,reject)=>{const urls=['https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js','https://unpkg.com/jsqr@1.4.0/dist/jsQR.js'];let i=0;function next(){if(i>=urls.length)return reject(Error('QR解析ライブラリを取得できません'));const el=document.createElement('script');el.src=urls[i++];el.onload=()=>typeof window.jsQR==='function'?resolve():next();el.onerror=next;document.head.appendChild(el)}next()});return libLoading}
+ const canvas=document.createElement('canvas'),ct=canvas.getContext('2d',{willReadFrequently:true});
+ function decode(image,w,h){canvas.width=w;canvas.height=h;ct.drawImage(image,0,0,w,h);return window.jsQR(ct.getImageData(0,0,w,h).data,w,h,{inversionAttempts:'attemptBoth'})}
+ async function stop(){scan=false;if(media){media.getTracks().forEach(x=>x.stop());media=null}const v=byId('qrVideo');v.pause();v.srcObject=null;v.hidden=true}
+ byId('qrDemo').onclick=()=>readData(example);
+ byId('qrStop').onclick=()=>{stop();status('カメラ停止')};
+ byId('qrCamera').onclick=async()=>{await stop();try{await loadLibrary();if(!navigator.mediaDevices?.getUserMedia)throw Error('HTTPSのSafariで開いてください');media=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});const v=byId('qrVideo');v.srcObject=media;v.hidden=false;await v.play();scan=true;status('架空のテスト用QRをカメラに映してください');let count=0;const loop=()=>{if(!scan)return;if(v.readyState>=2&&v.videoWidth){try{const w=Math.min(960,v.videoWidth),h=Math.round(v.videoHeight*w/v.videoWidth);const got=decode(v,w,h);if(got){readData(got.data);stop();return}}catch(e){status('画像解析エラー：'+e.message,true)}}if(++count>1000){stop();status('QRが検出されませんでした',true);return}setTimeout(()=>requestAnimationFrame(loop),150)};requestAnimationFrame(loop)}catch(e){await stop();status('カメラ起動失敗：'+e.message,true)}};
+ byId('qrFile').onchange=async event=>{const f=event.target.files?.[0];if(!f)return;await stop();try{await loadLibrary();const url=URL.createObjectURL(f),img=new Image();img.onload=()=>{try{const ratio=Math.min(1,1600/Math.max(img.naturalWidth,img.naturalHeight)),w=Math.max(1,Math.floor(img.naturalWidth*ratio)),h=Math.max(1,Math.floor(img.naturalHeight*ratio)),got=decode(img,w,h);if(!got)status('QRが画像内に見つかりません',true);else readData(got.data)}catch(e){status('画像解析失敗：'+e.message,true)}finally{URL.revokeObjectURL(url)}};img.onerror=()=>{URL.revokeObjectURL(url);status('画像を開けません',true)};img.src=url}catch(e){status(e.message,true)}finally{event.target.value=''}};
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
+})();
+
+// OCR is opt-in, runs recognition in the browser using externally fetched Tesseract.js and language assets. No patient data should be used in this prototype.
+(function(){
+ const inp=document.getElementById('rxPhoto'), area=document.getElementById('rxPhotoArea'), img=document.getElementById('rxPhotoPreview');
+ let url=null,ocrBusy=false;
+ function clear(){if(url)URL.revokeObjectURL(url);url=null;inp.value='';img.removeAttribute('src');area.hidden=true;document.getElementById('rxOcrArea').hidden=true;document.getElementById('rxOcrText').value='';}
+ inp.addEventListener('change',()=>{clearUrl();const file=inp.files&&inp.files[0];if(!file)return;if(!file.type.startsWith('image/')){alert('画像を選択してください');inp.value='';return}url=URL.createObjectURL(file);img.src=url;area.hidden=false;document.getElementById('rxOcrArea').hidden=true;document.getElementById('rxPhotoStatus').textContent='薬剤欄を指で囲んでください。';});
+ function clearUrl(){if(url)URL.revokeObjectURL(url);url=null;}
+ document.getElementById('rxPhotoRemove').addEventListener('click',clear);
+ const btn=document.getElementById('rxOcrStart'),status=document.getElementById('rxPhotoStatus');
+ const mode=document.getElementById('rxCropMode'),crop=document.getElementById('rxCropPreview');
+ const frame=document.getElementById('rxTouchFrame'),selection=document.getElementById('rxSelection'),enhance=document.getElementById('rxEnhance');
+ let rect=null,dragStart=null,dragging=false;
+ const clamp=v=>Math.max(0,Math.min(1,v));
+ function point(e){const r=img.getBoundingClientRect();return {x:clamp((e.clientX-r.left)/r.width),y:clamp((e.clientY-r.top)/r.height)}}
+ function drawSelection(){if(!rect||mode.value!=='manual'){selection.hidden=true;return}selection.hidden=false;selection.style.left=rect.x*100+'%';selection.style.top=rect.y*100+'%';selection.style.width=rect.w*100+'%';selection.style.height=rect.h*100+'%'}
+ function setRectangle(a,b){rect={x:Math.min(a.x,b.x),y:Math.min(a.y,b.y),w:Math.abs(a.x-b.x),h:Math.abs(a.y-b.y)};drawSelection()}
+ frame.addEventListener('pointerdown',e=>{if(mode.value!=='manual'||!img.naturalWidth)return;e.preventDefault();dragging=true;dragStart=point(e);setRectangle(dragStart,dragStart);try{frame.setPointerCapture(e.pointerId)}catch(_){}});
+ frame.addEventListener('pointermove',e=>{if(dragging){e.preventDefault();setRectangle(dragStart,point(e))}});
+ function finish(e){if(!dragging)return;dragging=false;setRectangle(dragStart,point(e));if(rect.w<.05||rect.h<.035){rect=null;selection.hidden=true;status.textContent='範囲が小さすぎます。薬剤欄を指で囲んでください。'}else{status.textContent='青枠とOCR対象プレビューを確認してください。'}updateCrop()}
+ frame.addEventListener('pointerup',finish);frame.addEventListener('pointercancel',()=>{dragging=false});
+ document.getElementById('rxResetSelection').onclick=()=>{rect=null;selection.hidden=true;updateCrop()};
+ function updateCrop(){
+  if(!img.complete||!img.naturalWidth)return;
+  drawSelection();const w=img.naturalWidth,h=img.naturalHeight;let x=0,y=0,sw=w,sh=h;
+  if(mode.value==='manual'){
+   if(!rect){crop.width=1;crop.height=1;status.textContent='先に画像上で薬剤欄を指で囲んでください。';return}
+   x=Math.round(rect.x*w);y=Math.round(rect.y*h);sw=Math.max(1,Math.round(rect.w*w));sh=Math.max(1,Math.round(rect.h*h));
+  }else{const frac=mode.value==='lower'?.5:mode.value==='bottom70'?.7:1;y=Math.round(h*(1-frac));sh=h-y}
+  const scale=Math.min(2,2400/sw);crop.width=Math.max(1,Math.round(sw*scale));crop.height=Math.max(1,Math.round(sh*scale));
+  const ctx=crop.getContext('2d',{willReadFrequently:true});ctx.fillStyle='#fff';ctx.fillRect(0,0,crop.width,crop.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(img,x,y,sw,sh,0,0,crop.width,crop.height);
+  if(enhance.value!=='plain'){const data=ctx.getImageData(0,0,crop.width,crop.height),d=data.data;for(let i=0;i<d.length;i+=4){let g=.299*d[i]+.587*d[i+1]+.114*d[i+2];if(enhance.value==='contrast')g=Math.max(0,Math.min(255,(g-128)*1.38+142));d[i]=d[i+1]=d[i+2]=g}ctx.putImageData(data,0,0)}
+ }
+ img.addEventListener('load',()=>{rect=null;updateCrop()});mode.addEventListener('change',updateCrop);enhance.addEventListener('change',updateCrop);window.addEventListener('resize',drawSelection);
+
+ function loadOCR(){if(window.Tesseract)return Promise.resolve();return new Promise((res,rej)=>{const t=document.createElement('script');t.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';t.onload=res;t.onerror=()=>rej(Error('文字認識ライブラリを読み込めません。ネット接続を確認してください。'));document.head.appendChild(t);});}
+ btn.addEventListener('click',async()=>{
+  if(ocrBusy||!img.src)return;
+  const f=inp.files&&inp.files[0];if(!f)return;
+  ocrBusy=true;btn.disabled=true;status.textContent='日本語の文字認識エンジンを準備しています（初回は時間がかかります）…';
+  let worker;
+  try{
+   await loadOCR();
+   worker=await window.Tesseract.createWorker('jpn',1,{logger:m=>{if(m.status==='recognizing text')status.textContent='文字を認識中… '+Math.round((m.progress||0)*100)+'%';}});
+   if(mode.value==='manual'&&(!rect||rect.w<.05||rect.h<.035))throw Error('先に薬剤欄を指で囲んでください。');
+   updateCrop(); const out=await worker.recognize(crop);
+   document.getElementById('rxOcrText').value=out.data.text||'';
+   document.getElementById('rxOcrArea').hidden=false;
+   status.textContent='文字認識が完了しました。数字・薬剤名・用法は特に誤認識を確認してください。';
+  }catch(err){status.textContent='認識できませんでした：'+(err.message||String(err));}
+  finally{try{if(worker)await worker.terminate()}catch(e){}ocrBusy=false;btn.disabled=false;}
+ });
+ document.getElementById('rxOcrCopy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(document.getElementById('rxOcrText').value);status.textContent='文字をコピーしました。'}catch(e){status.textContent='コピーできません。文章を長押ししてコピーしてください。'}});
+ window.addEventListener('pagehide',clearUrl);
+})();
+(function(){
+ const $x=id=>document.getElementById(id), root=$x('rxCandidates');
+ const options=['朝昼夕・食後','朝昼夕・食前','朝昼夕・食直後','朝夕・食後','朝・食後','昼・食後','夕・食後','寝・就寝前'];
+ const esc=s=>escapeHTML(String(s));
+ $x('rxParse').onclick=()=>{
+ const raw=$x('rxOcrText').value;
+ const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean),data=[];
+ const exclusions=/患者|氏名|保険|記号|番号|住所|電話|生年月日|医療機関|処方せん|処方箋|医師|薬局|交付|公費|負担|薬剤師|領収|受付|有効期限|クリニック|病院|カタカナ|年月日|明治|大正|昭和|平成|令和/;
+ // Avoid extracting unstructured OCR noise. Only accept a clearly labeled prescription drug row.
+ for(let i=0;i<lines.length;i++){
+  const v=lines[i].normalize('NFKC');
+  if(exclusions.test(v)||!/(?:錠|カプセル|散|顆粒|細粒|mg|µg)/i.test(v))continue;
+  if(!/(?:^|\s)(?:Rp\.?\s*\d+|(?:薬品名|医薬品名)\s*[:：])/.test(v))continue;
+  if(!/[\p{Script=Han}\p{Script=Katakana}a-zA-Z]{2,}/u.test(v))continue;
+  const following=lines.slice(i,i+4).join(' ').normalize('NFKC');
+  const dose=following.match(/1回\s*([0-9]+(?:\.[0-9]+)?)\s*(?:錠|カプセル|包)/), days=following.match(/(?:^|\s)([0-9]{1,3})\s*日分/);
+  // In OCR results, days can be confused with dates/ages; require explicit dose, period and timing.
+  let timing='';if(/毎食後|朝昼夕食後/.test(following))timing=options[0];else if(/毎食前|朝昼夕食前/.test(following))timing=options[1];else if(/毎食直後/.test(following))timing=options[2];else if(/朝夕食後/.test(following))timing=options[3];else if(/朝食後/.test(following))timing=options[4];else if(/昼食後/.test(following))timing=options[5];else if(/夕食後/.test(following))timing=options[6];else if(/就寝前|寝る前/.test(following))timing=options[7];
+  if(!dose||!days||!timing)continue;
+  const n=Number(days[1]),q=Number(dose[1]);if(n<1||n>90||q<=0||q>20)continue;
+  data.push({name:v.replace(/^.*?(?:Rp\.?\s*\d+|(?:薬品名|医薬品名)\s*[:：])/,'').trim().slice(0,110),q:String(q),days:String(n),timing});
+  if(data.length>=20)break;
+ }
+ if(!data.length){root.innerHTML='<p style="color:#923f21;font-weight:700">この画像から、確実な薬剤情報は抽出できませんでした。</p><p>今回のようなOCR誤読を薬剤名として表示しないため、取り込みを停止しました。薬情を作る場合は下の「処方箋の内容をまとめて入力」欄で原本を確認して手入力してください。</p>';return}
+ root.innerHTML=data.map((d,i)=>`<div class="rx-item" style="padding:10px 0;border-top:1px solid #ccc"><b>候補${i+1}</b><label>薬剤名・規格<input class="rx-n" value="${esc(d.name)}"></label><div class="fieldrow"><label>1回量<input class="rx-q" type="number" min="0.1" step="0.5" value="${esc(d.q)}"></label><label>日数<input class="rx-d" type="number" min="1" value="${esc(d.days)}"></label></div><label>用法<select class="rx-t"><option value="">必ず選択</option>${options.map(o=>`<option ${d.timing===o?'selected':''}>${o}</option>`).join('')}</select></label></div>`).join('')+'<label><input type="checkbox" id="rxConfirm"> 原本と照合し、すべての内容が正確であることを確認しました</label><button type="button" id="rxImport">確認済みの候補を薬情に反映</button><p class="hint">効能・注意事項・薬剤写真は自動取得されません。患者交付は禁止です。</p>';
+ root.querySelectorAll('input,select').forEach(el=>{if(el.id!=='rxConfirm')el.addEventListener('change',()=>{$x('rxConfirm').checked=false})});
+ $x('rxImport').onclick=()=>{if(!$x('rxConfirm').checked)return alert('処方箋原本との照合が必要です');
+ const mapping={'朝昼夕・食後':[[1,1,1,0],'食後'],'朝昼夕・食前':[[1,1,1,0],'食前'],'朝昼夕・食直後':[[1,1,1,0],'食直後'],'朝夕・食後':[[1,0,1,0],'食後'],'朝・食後':[[1,0,0,0],'食後'],'昼・食後':[[0,1,0,0],'食後'],'夕・食後':[[0,0,1,0],'食後'],'寝・就寝前':[[0,0,0,1],'就寝前']};
+ const items=[];for(const r of root.querySelectorAll('.rx-item')){const name=r.querySelector('.rx-n').value.trim(),q=Number(r.querySelector('.rx-q').value),days=Number(r.querySelector('.rx-d').value),timing=r.querySelector('.rx-t').value,m=mapping[timing];if(!name||!m||!(q>0)||!Number.isInteger(days)||days<1)return alert('未入力・非対応の項目があります。すべて確認してください');items.push({name,doses:m[0].map(x=>x*q),conditions:m[0].map(x=>x?m[1]:''),days,pack:false,effect:'【未登録】正式な情報との照合が必要です。',caution:'【未登録】正式な注意事項との照合が必要です。'})}
+ if(confirm('現在の処方を'+items.length+'件の候補で置き換えますか？')){drugs=items;active=0;render();alert('薬情に反映しました。薬剤情報未照合のため患者交付は禁止です。')}};
+ };
+})();
+
+// Unified data-entry route: hand transcription or OCR-corrected text, without third-party transmission.
+(function(){
+const q=id=>document.getElementById(id);
+const mapping={'朝昼夕・食後':[[1,1,1,0],'食後'],'朝昼夕・食前':[[1,1,1,0],'食前'],'朝昼夕・食直後':[[1,1,1,0],'食直後'],'朝夕・食後':[[1,0,1,0],'食後'],'朝・食後':[[1,0,0,0],'食後'],'昼・食後':[[0,1,0,0],'食後'],'夕・食後':[[0,0,1,0],'食後'],'寝・就寝前':[[0,0,0,1],'就寝前']};
+const template=q('quickText').value;
+q('quickTemplate').onclick=()=>{q('quickText').value=template;q('quickReview').textContent='入力例に戻しました。'};
+q('quickCheck').onclick=()=>{
+ let rows=q('quickText').value.split(/\r?\n/).map(t=>t.trim()).filter(Boolean), problems=[];
+ if(!rows.length||rows.length>30){q('quickReview').textContent='1～30剤の範囲で入力してください。';return}
+ let parsed=rows.map((line,i)=>{
+  const fields=line.split(/[｜|\t]/).map(s=>s.trim());
+  const [name='',amount='',timing='',days='']=fields;const quantity=Number(amount),period=Number(days),m=mapping[timing];
+  if(fields.length!==4||!name||name.length>100||!/^[\d.]+$/.test(amount)||!(quantity>0&&quantity<=20)||!m||!/^[\d]+$/.test(days)||!(period>=1&&period<=365))problems.push('行'+(i+1)+'：形式・薬剤名・量・用法・日数を確認');
+  return {name,quantity,timing,period,m};
+ });
+ const root=q('quickReview');
+ if(problems.length){root.innerHTML='<p style="color:#a32929">'+problems.map(escapeHTML).join('<br>')+'</p>';return}
+ root.innerHTML='<div style="padding:9px;background:#fff;border:1px solid #9aabb7;margin-top:8px"><b>取り込み前の確認：'+parsed.length+'剤</b>'+parsed.map((p,i)=>'<div style="padding:5px 0;border-bottom:1px solid #ddd">'+(i+1)+'. '+escapeHTML(p.name)+'／1回 '+p.quantity+'／'+escapeHTML(p.timing)+'／'+p.period+'日</div>').join('')+'<label style="display:block;margin:9px 0"><input type="checkbox" id="quickVerified"> 架空の処方箋原本と照合しました</label><button id="quickApply" type="button">確認内容を薬情に反映</button></div>';
+ q('quickApply').onclick=()=>{
+  if(!q('quickVerified').checked)return alert('原本との照合を確認してください。');
+  if(!confirm('現在の薬情の薬剤リストを置き換えますか？'))return;
+  drugs=parsed.map(p=>({name:p.name,doses:p.m[0].map(n=>n*p.quantity),conditions:p.m[0].map(n=>n?p.m[1]:''),days:p.period,pack:false,effect:'【未登録】薬剤情報を照合して入力してください。',caution:'【未登録】副作用・注意事項を照合して入力してください。'}));active=0;render();q('validationStatus').textContent='処方内容を反映しました。薬剤説明未登録です。';alert('反映しました。薬剤説明・注意事項を各剤で確認してください。');
+ };
+};
+q('runAudit').onclick=()=>{
+ const errs=[];if(!drugs.length)errs.push('薬剤が未登録です。');
+ drugs.forEach((d,i)=>{
+  if(!d.name||/サンプル薬/.test(d.name))errs.push((i+1)+'剤目：薬剤名がサンプルです。');
+  if(!d.effect||/未登録|架空|サンプル/.test(d.effect))errs.push((i+1)+'剤目：効能・説明が未確認です。');
+  if(!d.caution||/未登録|架空|サンプル/.test(d.caution))errs.push((i+1)+'剤目：注意事項が未確認です。');
+  if(!d.doses||!d.doses.some(v=>v>0))errs.push((i+1)+'剤目：服用量がありません。');
+ });
+ errs.push('薬剤写真はサンプル表示です。実薬写真との照合は未実装です。');
+ errs.push('実処方箋QR（JAHIS）の読み取りと薬剤マスター照合は未完成です。');
+ q('validationStatus').innerHTML=errs.map(escapeHTML).join('<br>');
+};
+})();
+
+// JAHIS outpatient prescription QR prototype inspector, based on JAHIS 26-101 v1.11.
+// No real patient information or data persistence. Do not auto-import unknown instructions.
+(function(){
+ const $id=id=>document.getElementById(id);
+ const esc=s=>escapeHTML(String(s??''));
+ function csv(line){const a=[];let t='',quoted=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'){if(quoted&&line[i+1]==='"'){t+='"';i++}else quoted=!quoted;}else if(c===','&&!quoted){a.push(t);t=''}else t+=c;}a.push(t);return a.map(v=>v.trim())}
+ const requiredCodes=['101','111','201'];
+ function parse(raw){
+  const lines=raw.replace(/^\uFEFF/,'').split(/\r\n|\n|\r/).map(x=>x.trim()).filter(Boolean);
+  if(lines.length>700||raw.length>100000)throw Error('入力が長すぎます');
+  if(!/^JAHIS\d+$/.test(lines[0]||''))throw Error('先頭行がJAHISのバージョン表記ではありません');
+  const version=lines.shift(), records=lines.map(csv), recognized=records.filter(r=>/^\d+$/.test(r[0])), byRP={};
+  let unknown=[];
+  recognized.forEach((r,i)=>{
+   const code=r[0], rp=r[1];
+   if(['101','111','201','241','221','181','281','102','211'].includes(code)&&/^\d+$/.test(rp)){
+    const g=byRP[rp]||(byRP[rp]={rp,meds:[],notes:[],warnings:[]});
+    if(code==='101')g.form=r;
+    if(code==='111')g.usage=r;
+    if(code==='201')g.meds.push(r);
+    if(code==='241'){g.once=g.once||{};g.once[r[2]]=r;}
+    if(['221','181','281','102','211'].includes(code))g.notes.push(r);
+   }else unknown.push(r);
+  });
+  const groups=Object.values(byRP).sort((a,b)=>Number(a.rp)-Number(b.rp));
+  groups.forEach(g=>{
+   if(!g.form)g.warnings.push('101剤形レコードがありません');
+   if(!g.usage)g.warnings.push('111用法レコードがありません');
+   if(!g.meds.length)g.warnings.push('201薬品レコードがありません');
+   if(g.notes.length)g.warnings.push('補足・不均等・分割等のレコードあり。自動変換は対象外');
+  });
+  return {version,records,groups,unknown,lines};
+ }
+ const demo=['JAHIS11','101,1,1,,14','111,1,1,,毎食後服用,3','201,1,1,1,1,,架空テスト薬A錠,3,1,錠','241,1,1,1,3','101,2,1,,7','111,2,1,,朝食後服用,1','201,2,1,1,1,,架空テスト薬B錠,1,1,錠','241,2,1,1,1'].join('\r\n');
+ function timing(v){const t=String(v||'').replace(/\s/g,'');if(/毎食後|朝昼夕食後/.test(t))return [[1,1,1,0],'食後',3];if(/毎食前|朝昼夕食前/.test(t))return [[1,1,1,0],'食前',3];if(/毎食直後|朝昼夕食直後/.test(t))return [[1,1,1,0],'食直後',3];if(/朝夕食後/.test(t))return [[1,0,1,0],'食後',2];if(/朝食後/.test(t))return [[1,0,0,0],'食後',1];if(/夕食後/.test(t))return [[0,0,1,0],'食後',1];if(/就寝前/.test(t))return [[0,0,0,1],'就寝前',1];return null}
+ function candidate(g,m){
+  const w=[];const name=m[6]||'', days=Number(g.form?.[4]||0),usage=g.usage?.[4]||'';
+  const tt=timing(usage), num=Number(m[7]); const once=g.once?.[m[2]],dose=once?Number(once[3]):tt&&Number.isFinite(num)?num/tt[2]:NaN;
+  if(!name)w.push('名称なし（医薬品コード照合が必要）');
+  if(!g.form||g.form[2]!=='1')w.push('内服以外または剤形不明');
+  if(!Number.isInteger(days)||days<1||days>365)w.push('日数が未確定');
+  if(!tt)w.push('用法名称を安全に変換できません');
+  if(!['錠','カプセル','包'].includes(m[9]))w.push('単位の自動変換対象外');
+  if(!Number.isFinite(dose)||dose<=0||dose>50)w.push('服用量が未確定');
+  if(tt && g.usage?.[5] && Number(g.usage[5])!==tt[2])w.push('記載回数と用法が一致しません');
+  if(tt && once && Number.isFinite(num) && Math.abs(dose*tt[2]-num)>0.0001)w.push('1回量と1日量が一致しません');
+  if(g.warnings.length)w.push(...g.warnings);
+  return {name,days,usage,amount:m[7],unit:m[9],dose,tt,w,code:m[5]};
+ }
+ function inspect(raw){const out=$id('jahisOutput');try{
+  const data=parse(raw);out.innerHTML=`<p><b>${esc(data.version)}</b> / レコード ${data.records.length}件 / RP ${data.groups.length}件。個人情報の表示・送信は行わない設計ですが、公開試験版には実患者データを入力しないでください。</p>`;
+  const items=[];
+  data.groups.forEach(g=>g.meds.forEach(m=>items.push(candidate(g,m))));
+  if(items.length===0)throw Error('201薬品レコードを検出できません');
+  const hasWarning=items.some(i=>i.w.length)||data.version!=='JAHIS11';
+  out.innerHTML+=items.map((x,i)=>`<div style="border-top:1px solid #cbd5e1;padding:9px 0"><b>候補 ${i+1}</b>：${esc(x.name||'薬品名なし')}<div>用法：${esc(x.usage)} ／ 1日量：${esc(x.amount)}${esc(x.unit||'')} ／ 1回量候補：${Number.isFinite(x.dose)?esc(x.dose):'未確定'} ／ ${esc(x.days||'未確定')}日</div>${x.w.length?`<p style="color:#a23b24">確認事項：${x.w.map(esc).join(' / ')}</p>`:''}</div>`).join('');
+  if(data.unknown.length)out.innerHTML+=`<p style="color:#a23b24">自動変換対象外レコード ${data.unknown.length}件があります。</p>`;
+  if(hasWarning||data.unknown.length){out.innerHTML+='<p><b>安全のため薬情への自動反映は無効です。元の処方箋と照合して手入力してください。</b></p>';return}
+  out.innerHTML+=`<label style="display:block;margin:8px 0"><input type="checkbox" id="jahisConfirmed"> 架空データであり、全項目を原本と照合しました</label><button id="jahisApply" type="button">確認済み候補を薬情へ反映（試験）</button>`;
+  $id('jahisApply').onclick=()=>{if(!$id('jahisConfirmed').checked)return alert('確認チェックが必要です');if(!confirm('現在の薬剤を架空テストの候補に置き換えますか？'))return;
+   drugs=items.map(x=>({name:x.name,days:x.days,doses:x.tt[0].map(v=>v*x.dose),conditions:x.tt[0].map(v=>v?x.tt[1]:''),pack:false,effect:'【未登録】正式な医薬品情報の照合が必要',caution:'【未登録】副作用・注意事項の照合が必要'}));active=0;render();alert('試験データを反映しました。患者交付は不可です。')};
+ }catch(e){out.textContent='解析できません：'+e.message;}}
+ window.inspectJahis=inspect;
+ $id('jahisExample').onclick=()=>{$id('jahisInput').value=demo;inspect(demo)};
+ $id('jahisAnalyze').onclick=()=>inspect($id('jahisInput').value);
+})();
+
+/* v4.6 local, explicit drug-name candidate matching. No external data transfer. */
+(function(){
+ const el=id=>document.getElementById(id), esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const status=el('rxMasterStatus'), output=el('rxMasterResults');
+ let master=[];
+ const normalize=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/[\s　・･\-－‐―ー()（）\[\]「」『』、,\.]/g,'');
+ function csvRows(text){
+  const rows=[],row=[];let field='',quoted=false;
+  for(let i=0;i<text.length;i++){
+   const c=text[i];
+   if(c==='"'){if(quoted&&text[i+1]==='"'){field+='"';i++}else quoted=!quoted}
+   else if(c===','&&!quoted){row.push(field);field=''}
+   else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&text[i+1]==='\n')i++;row.push(field);if(row.some(v=>v.trim()))rows.push(row.slice());row.length=0;field=''}
+   else field+=c;
+  }
+  row.push(field);if(row.some(v=>v.trim()))rows.push(row);
+  return rows;
+ }
+ function distance(a,b){
+  if(a.length>b.length)[a,b]=[b,a];let prev=Array.from({length:a.length+1},(_,i)=>i);
+  for(let i=1;i<=b.length;i++){
+   let cur=[i];for(let j=1;j<=a.length;j++)cur[j]=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[j-1]===b[i-1]?0:1));prev=cur;
+  }return prev[a.length];
+ }
+ el('rxMasterFile').addEventListener('change',async e=>{
+  master=[];output.textContent='';const file=e.target.files&&e.target.files[0];if(!file){status.textContent='未読み込み';return}
+  if(file.size>3_000_000){status.textContent='CSVが大きすぎます（3MB以内）。';return}
+  try{
+   let text=await file.text();text=text.replace(/^\uFEFF/,'');const rows=csvRows(text);
+   if(!rows.length)throw Error('空のCSVです');const heads=rows.shift().map(x=>normalize(x));
+   const nameIndex=heads.findIndex(h=>['薬剤名','医薬品名','販売名','name','drugname'].includes(h));
+   const strengthIndex=heads.findIndex(h=>['規格','規格単位','strength','dosage'].includes(h));
+   if(nameIndex<0)throw Error('「薬剤名」または「name」列がありません');
+   master=rows.map(r=>({name:(r[nameIndex]||'').trim(),strength:strengthIndex>=0?(r[strengthIndex]||'').trim():''})).filter(r=>r.name).slice(0,20000);
+   if(!master.length)throw Error('薬剤名がありません');
+   status.textContent=master.length+'件を端末内に読み込みました。'+(strengthIndex<0?'規格列なし・規格照合不可。':'');
+  }catch(err){master=[];status.textContent='読み込み失敗：'+err.message}
+ });
+ el('rxMasterSuggest').addEventListener('click',()=>{
+  if(!master.length){output.textContent='先に薬剤マスターCSVを読み込んでください。';return}
+  const lines=el('rxMatchLines').value.split(/\r?\n/).map(v=>v.trim()).filter(Boolean).slice(0,15);
+  if(!lines.length){output.textContent='照合する薬剤名の行を入力してください。';return}
+  output.innerHTML=lines.map((line,i)=>{
+   let target=normalize(line);if(target.length<4)return '<p>候補'+(i+1)+'：短すぎるため照合しません。</p>';
+   const hits=master.map(item=>{
+    const n=normalize(item.name+' '+item.strength);
+    const d=n.includes(target)||target.includes(n)?0:distance(target,n);
+    const similarity=1-d/Math.max(target.length,n.length,1);
+    return {...item,similarity};
+   }).filter(it=>it.similarity>=.53).sort((a,b)=>b.similarity-a.similarity).slice(0,5);
+   return '<div style="border-top:1px solid #c3d6e7;padding:8px 0"><b>OCR行 '+(i+1)+': '+esc(line)+'</b>'+(hits.length?'<div class="hint">似た名前の候補（医薬品コード・規格・原本を必ず照合）</div>'+hits.map(it=>'<label style="display:block;padding:5px;margin:3px 0;border:1px solid #cad9e6;border-radius:5px"><input type="radio" name="master'+i+'" value="'+esc(it.name)+'" style="width:auto"> '+esc(it.name)+'　'+esc(it.strength)+' <small>（文字類似 '+Math.round(it.similarity*100)+'%）</small></label>').join(''):'<p class="hint">類似候補なし。推測は行いません。</p>')+'</div>';
+  }).join('');
+ });
+ el('rxOcrText').addEventListener('input',()=>{if(!el('rxMatchLines').value.trim())el('rxMatchLines').value=el('rxOcrText').value});
+})();
+
+
+// Local photograph catalog: IndexedDB, exact name matching, explicit photo confirmation.
+const lpDB='yakujou-local-photo-db-v1', lpStore='photos';
+let lpCatalogCache=new Map(), lpPending=null;
+function lpKey(v){return String(v||'').normalize('NFKC').replace(/[\s　]+/g,'').toLowerCase()}
+function lpOpen(){return new Promise((resolve,reject)=>{let req=indexedDB.open(lpDB,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(lpStore))req.result.createObjectStore(lpStore,{keyPath:'key'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function lpAll(){let db=await lpOpen();return new Promise((resolve,reject)=>{let tx=db.transaction(lpStore,'readonly');let req=tx.objectStore(lpStore).getAll();req.onsuccess=()=>{db.close();resolve(req.result)};req.onerror=()=>{db.close();reject(req.error)}})}
+async function lpPut(item){let db=await lpOpen();return new Promise((resolve,reject)=>{let tx=db.transaction(lpStore,'readwrite');tx.objectStore(lpStore).put(item);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+async function lpDelete(key){let db=await lpOpen();return new Promise((resolve,reject)=>{let tx=db.transaction(lpStore,'readwrite');tx.objectStore(lpStore).delete(key);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+function localPhotoHTML(d,i){const item=lpCatalogCache.get(lpKey(d.name));return item?`<img class="local-pill-photo" src="${item.image}" alt="登録済み薬剤画像"><span class="photo-unverified">薬局登録画像・薬品照合要</span>`:`<div class="pillmock"><span class="pill">S${i+1}</span></div><span class="mocknotice">写真未登録（見本）</span>`}
+function lpEscape(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function lpRefresh(){try{const all=await lpAll();lpCatalogCache=new Map(all.map(x=>[x.key,x]));const box=document.getElementById('lpCatalog');const query=lpKey(document.getElementById('lpSearch').value);const visible=all.filter(x=>!query||lpKey([x.name,x.code,x.shelf,x.shelfNote].join(' ')).includes(query));box.innerHTML='<b>登録済み薬剤：'+all.length+'件（表示 '+visible.length+'件）</b>'+visible.map(x=>`<div class="lp-row"><img src="${x.image}" alt=""><span style="flex:1">${lpEscape(x.name)}<small> ${lpEscape(x.code||'')}</small><br><strong>保管場所：${lpEscape(x.shelf||'未登録')}</strong><small> ${lpEscape(x.shelfNote||'')}</small></span><button type="button" data-lp-edit="${lpEscape(x.key)}">登録内容を編集</button><button type="button" data-lp-use="${lpEscape(x.key)}">編集薬剤に適用</button><button type="button" class="secondary" data-lp-delete="${lpEscape(x.key)}">削除</button></div>`).join('');box.querySelectorAll('[data-lp-edit]').forEach(el=>el.onclick=()=>{const x=lpCatalogCache.get(el.dataset.lpEdit);if(!x)return;document.getElementById('lpName').value=x.name;document.getElementById('lpCode').value=x.code||'';document.getElementById('lpShelf').value=x.shelf||'';document.getElementById('lpShelfNote').value=x.shelfNote||'';document.getElementById('lpEffect').value=x.effect||'';document.getElementById('lpCaution').value=x.caution||'';lpPending=x.image;document.getElementById('lpPreview').src=x.image;document.getElementById('lpPreview').hidden=false;document.getElementById('lpStatus').textContent='既存の登録を編集しています。内容を確認して保存してください。';});box.querySelectorAll('[data-lp-use]').forEach(el=>el.onclick=()=>{const rec=lpCatalogCache.get(el.dataset.lpUse);if(!rec)return;if(confirm('薬剤名と規格を原本で照合しましたか？\n'+rec.name)){drugs[active].name=rec.name;render()}});box.querySelectorAll('[data-lp-delete]').forEach(el=>el.onclick=async()=>{if(confirm('この薬剤写真を削除しますか？')){await lpDelete(el.dataset.lpDelete);await lpRefresh()}});sheet()}catch(e){document.getElementById('lpStatus').textContent='台帳にアクセスできません：'+e.message}}
+const lpFileEl=document.getElementById('lpFile');
+lpFileEl.addEventListener('change',async()=>{lpPending=null;const f=lpFileEl.files?.[0];if(!f)return;if(!f.type.startsWith('image/')||f.size>12*1024*1024){alert('12MB以下の画像を選択してください');return}try{const bitmap=await createImageBitmap(f),canvas=document.createElement('canvas');const sc=Math.min(1,900/Math.max(bitmap.width,bitmap.height));canvas.width=Math.round(bitmap.width*sc);canvas.height=Math.round(bitmap.height*sc);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);lpPending=canvas.toDataURL('image/jpeg',.78);document.getElementById('lpPreview').src=lpPending;document.getElementById('lpPreview').hidden=false;document.getElementById('lpStatus').textContent='写真を確認してください。登録はまだ完了していません。';bitmap.close?.()}catch(e){alert('画像の処理に失敗しました：'+e.message)}});
+document.getElementById('lpUseCurrent').onclick=()=>{document.getElementById('lpName').value=drugs[active]?.name||''};
+document.getElementById('lpSave').onclick=async()=>{
+ const val=id=>document.getElementById(id).value.trim();
+ const name=val('lpName'),code=val('lpCode'),shelf=val('lpShelf'),shelfNote=val('lpShelfNote');
+ const effect=val('lpEffect'),caution=val('lpCaution'),editedBy=val('lpEditor');
+ if(!name){alert('薬品名・規格が必要です');return}
+ try{
+  const previous=lpCatalogCache.get(lpKey(name));
+  if(!lpPending&&!previous?.image){alert('初回は薬剤の実物写真を登録してください');return}
+  if(!editedBy){alert('登録者の識別名を入力してください');return}
+  if(!confirm('同一薬剤・規格、写真、棚場所、説明内容を確認しましたか？\n'+name))return;
+  const now=new Date().toISOString(),history=Array.isArray(previous?.history)?previous.history.slice(-29):[];
+  if(previous)history.push({at:previous.updatedAt||previous.savedAt||'',by:previous.editedBy||'未記録',shelf:previous.shelf||'',shelfNote:previous.shelfNote||'',effect:previous.effect||'',caution:previous.caution||''});
+  await lpPut({key:lpKey(name),name,code,shelf:shelf.slice(0,100),shelfNote:shelfNote.slice(0,200),effect:effect.slice(0,2000),caution:caution.slice(0,4000),editedBy:editedBy.slice(0,80),updatedAt:now,savedAt:previous?.savedAt||now,history,image:lpPending||previous.image});
+  document.getElementById('lpStatus').textContent='保存しました（この端末のみ）。共有にはサーバーが必要です。';lpPending=null;await lpRefresh();
+ }catch(e){alert('保存できません：'+e.message)}
+};
+document.getElementById('lpExport').onclick=async()=>{const records=await lpAll();const blob=new Blob([JSON.stringify({type:'yakujou-local-photos-v1',schemaVersion:2,exportedAt:new Date().toISOString(),records})],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='yakujou-pharmacy-photos-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000)};
+document.getElementById('lpImport').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{const data=JSON.parse(await f.text());if(data.type!=='yakujou-local-photos-v1'||!Array.isArray(data.records)||data.records.length>5000)throw Error('非対応の台帳です');if(!confirm(data.records.length+'件を取り込みます。既存の同名薬剤は上書きされます。よろしいですか？'))return;for(const x of data.records){if(typeof x.name!=='string'||typeof x.image!=='string'||!/^data:image\/(?:jpeg|png|webp);base64,/.test(x.image))continue;await lpPut({key:lpKey(x.name),name:x.name.slice(0,200),code:String(x.code||'').slice(0,80),shelf:String(x.shelf||'').slice(0,100),shelfNote:String(x.shelfNote||'').slice(0,200),effect:String(x.effect||'').slice(0,2000),caution:String(x.caution||'').slice(0,4000),editedBy:String(x.editedBy||'').slice(0,80),updatedAt:String(x.updatedAt||''),history:Array.isArray(x.history)?x.history.slice(-30):[],image:x.image,savedAt:x.savedAt||''})}await lpRefresh();document.getElementById('lpStatus').textContent='台帳を復元しました。'}catch(e){alert('復元失敗：'+e.message)}});
+document.getElementById('lpSearch').addEventListener('input',lpRefresh);
+lpRefresh();
+
+</script><script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id), status=$('gsStatus');let stream=null,reader=null,loopOn=false;
+function checkDigit(gtin){if(!/^\d{14}$/.test(gtin))return false;let sum=0;for(let i=12;i>=0;i--)sum+=Number(gtin[i])*((12-i)%2?1:3);return (10-sum%10)%10===Number(gtin[13]);}
+function parseGS(v){v=String(v||'').replace(/\u001d/g,'|').trim();let m=v.match(/\(01\)\s*(\d{14})/)||v.match(/^01(\d{14})/)||v.match(/^(\d{14})$/);return m?m[1]:'';}
+function resolve(){const code=parseGS($('gsRaw').value);if(!code){status.textContent='GTINを認識できません。(01)に続く14桁または14桁のGTINを入力してください。';return}if(!checkDigit(code)){status.textContent='GTINのチェックデジットが一致しません。原本を確認してください。';return}$('gsGtin').value=code;status.textContent='GTIN '+code+' を取得。製品名はコードだけでは確定しません。現物照合してください。';}
+$('gsParse').onclick=resolve;
+async function stop(){loopOn=false;if(reader&&reader.cancel)try{await reader.cancel()}catch(e){};reader=null;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('gsVideo').hidden=true;}
+$('gsStop').onclick=()=>{stop();status.textContent='カメラを停止しました'};
+$('gsCamera').onclick=async()=>{
+ await stop();if(!('BarcodeDetector' in window)){status.textContent='このブラウザは直接のGS1カメラ読取に非対応です。コード欄へ手入力または貼り付けしてください。';return}
+ if(!navigator.mediaDevices?.getUserMedia){status.textContent='カメラを利用できません（HTTPSやアクセス許可を確認）。';return}
+ try{const fmts=await BarcodeDetector.getSupportedFormats();const selected=['data_matrix','code_128','ean_13','ean_8','itf'].filter(x=>fmts.includes(x));if(!selected.length){status.textContent='GS1対応バーコード形式が利用できません';return}const detector=new BarcodeDetector({formats:selected});stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});const video=$('gsVideo');video.srcObject=stream;video.hidden=false;await video.play();loopOn=true;status.textContent='読み取り中。GS1 DataMatrixまたはGS1-128を画面に合わせてください。';async function scan(){if(!loopOn)return;try{const codes=await detector.detect(video);if(codes.length){const value=codes.map(x=>x.rawValue).find(x=>parseGS(x));if(value){$('gsRaw').value=value;resolve();await stop();return}}}catch(e){} if(loopOn)setTimeout(scan,250)}scan();}catch(e){status.textContent='カメラ起動失敗：'+e.message;await stop()}
+ };
+ $('gsApply').onclick=()=>{const gtin=$('gsGtin').value.trim();if(gtin&&!checkDigit(gtin)){alert('GTINの14桁とチェックデジットを確認してください');return}const shelf=$('gsShelf').value,row=$('gsRow').value.trim(),col=$('gsCol').value.trim();if(!row||!col){alert('段と列（または引き出し番号）を入力してください');return}const location=shelf==='引き出し'?`${shelf} ${col}`:`${shelf} ${row}段目 ${col}列目`;$('lpShelf').value=location;$('lpShelfNote').value=gtin?'GTIN: '+gtin:($('lpShelfNote').value||'');if(gtin)$('lpCode').value=gtin;$('lpShelf').scrollIntoView({behavior:'smooth',block:'center'});status.textContent='登録欄に転記しました。薬品名・規格・写真を確認して「薬剤台帳を登録・更新」を押してください。';};
+ function getLocation(s){s=String(s||'');let sh=(s.match(/([ABCD])\s*棚/i)||[])[1];if(sh){let r=Number((s.match(/(\d+)\s*段/)||[])[1]);let c=Number((s.match(/(\d+)\s*(?:列|番)/)||[])[1]);return {shelf:sh+'棚',row:r,col:c}}let d=(s.match(/引き出し\s*([a-z])\s*(\d+)/i)||[]);if(d.length)return {shelf:'引き出し',row:d[1].toLowerCase().charCodeAt(0)-96,col:Number(d[2])};return null;}
+ function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ async function render(){let records=[];try{records=await lpAll()}catch(e){$('gsHits').textContent='台帳を読み込めません：'+e.message;return}const q=$('gsSearch').value.trim().toLowerCase();const found=q?records.filter(x=>[x.name,x.code,x.shelf,x.shelfNote].some(v=>String(v||'').toLowerCase().includes(q))):[];const places=new Map();found.forEach(x=>{const loc=getLocation(x.shelf);if(loc){const k=[loc.shelf,loc.row,loc.col].join(':');places.set(k,[...(places.get(k)||[]),x.name])}});$('gsMap').innerHTML=['A棚','B棚','C棚','D棚','引き出し'].map(shelf=>{let cells='';for(let r=1;r<=4;r++)for(let c=1;c<=5;c++){const names=places.get([shelf,r,c].join(':'))||[];cells+=`<div class="gs-cell ${names.length?'match':''}">${shelf==='引き出し'?String.fromCharCode(96+r)+c:r+'-'+c}${names.length?'<b>'+esc(names.join(' / '))+'</b>':''}</div>`}return `<div class="gs-unit"><h4>${shelf}</h4><div class="gs-cells">${cells}</div></div>`}).join('');$('gsHits').innerHTML=q?(found.length?found.map(x=>`<div class="gs-hit">${esc(x.name)}　→　${esc(x.shelf||'保管場所未登録')}</div>`).join(''):'一致する登録薬はありません'):'薬剤名を入力すると該当マスが赤くなります。棚図は仮配置（各4段×5列）です。';}
+ $('gsSearch').addEventListener('input',render);$('lpSave').addEventListener('click',()=>setTimeout(render,450));$('lpImport').addEventListener('change',()=>setTimeout(render,900));render();
+})();
+</script></body></html>
